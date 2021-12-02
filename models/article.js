@@ -1,27 +1,40 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const articleSchema = new Schema({
-  title: {
-    type: String,
-    required: [true, "Title is required"],
-    minlength: [2, "Title must be at least 2 characters."],
-    maxlength: [100, "Title must be no more than 100 characters"],
-    validate: {
-      validator: function(value) {
-        return /^[\w'",.!? ]+$/.test(value);
+const articleSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Title is required"],
+      minlength: [2, "Title must be at least 2 characters."],
+      maxlength: [100, "Title must be no more than 100 characters"],
+      validate: {
+        validator: function (value) {
+          return /^[\w'",.!? ]+$/.test(value);
+        },
+        message: (props) =>
+          `${props.value} should only contain letters, numbers, spaces, and '",!?. characters.`,
       },
-      message: props => `${props.value} should only contain letters, numbers, spaces, and '",!?. characters.`
+    },
+    content: {
+      type: String,
+      required: [true, "Content is required"],
+    },
+    published: {
+      type: Boolean,
+      default: false,
+    },
+    date: {
+      type: Date,
+    },
+    schedule: {
+      type: String,
+    },
+    index: {
+      type: Number,
     },
   },
-  content: {
-    type: String,
-    required: [true, "Content is required"],
-  },
-  published: {
-    type: Boolean,
-    default: false,
-  }
-}, {timestamps: true});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Article', articleSchema);
+module.exports = mongoose.model("Article", articleSchema);

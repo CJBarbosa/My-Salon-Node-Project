@@ -2,6 +2,19 @@
  * GLOBAL
  */
 
+function test(articles) {
+  articles.forEach((article) => {
+    console.log(article.index, "=>", article.schedule);
+  });
+
+  var str = "<ul>";
+  articles.forEach(function (slide) {
+    str += "<li>" + slide.schedule + "</li>";
+  });
+  str += "</ul>";
+  document.getElementById("test").innerHTML = str;
+}
+
 //MARK THE CURRENT PAGE NAVEBAR AS SELECTED
 window.onload = function get_body() {
   //Get the page id of the current page
