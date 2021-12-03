@@ -23,7 +23,12 @@ exports.contactUS = (req, res) => {
   res.render("pages/contact-us");
 };
 
-//GET /contact-us
+//GET /login
 exports.login = (req, res) => {
   res.render("pages/login");
+};
+
+//GET /admin-area
+exports.adminArea = (req, res) => {
+  res.render("pages/admin-area");
 };

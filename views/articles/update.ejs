@@ -1,8 +1,8 @@
-<% include ../article-layouts/header %>
+<% include ../layouts/article-header %>
 
 <h1>Update Article</h1>
 
-<% include ../article-layouts/form-errors %>
+<% include ../layouts/article-form-errors %>
 
 <form method="POST" action="/articles/<%= article._id %>/update">
   <div>
@@ -40,4 +40,4 @@
 <h3>Delete Article</h3>
 <a href="/articles/<%= article._id %>/delete">Delete</a>
 
-<% include ../article-layouts/footer %>
+<% include ../layouts/article-footer %>

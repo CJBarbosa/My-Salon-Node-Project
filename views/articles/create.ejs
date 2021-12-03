@@ -1,51 +1,136 @@
-<% include ../layouts/article-header %>
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <div class="container-xl">
+      <!-- Main -->
 
-<h1>Create Article</h1>
+      <!-- <FULL SCREEN MODAL - OPTION 2> -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-1 text-center bg-light shadow">
+            <div class="card-header custonbgp h5" id="dateTitle">Date</div>
+            <div class="card-body">
+              <form
+                class="row g-3 needs-validation"
+                method="POST"
+                action="/articles/create"
+                novalidate
+              >
+                <div class="col-12">
+                  <h6>Chose a time:</h6>
+                  <hr />
+                  <input
+                    type="hidden"
+                    id="bookDate"
+                    name="bookDate"
+                    value="<%= typeof article === 'undefined' ? '' : article.date %>"
+                  />
+                  <input
+                    type="hidden"
+                    id="BookPosition2"
+                    name="BookPosition"
+                    value="<%= typeof article === 'undefined' ? '' : article.index %>"
+                  />
+                  <div class="form-check ps-0" id="form-check-hours"></div>
+                  <hr />
+                </div>
+                <h6>Provide your information:</h6>
+                <div class="col-md-6">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text">First name:</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="userFirstName"
+                      value=""
+                      name="userFirstName"
+                      minlength="3"
+                      pattern="^[a-zA-Z]*$"
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">
+                      Please enter with your first name.
+                    </div>
+                  </div>
+                </div>
 
-<% include ../layouts/article-form-errors %>
+                <div class="col-md-6">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text">Last name:</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="userLasttName"
+                      value=""
+                      name="userLasttName"
+                      minlength="3"
+                      pattern="^[a-zA-Z]*$"
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">
+                      Please enter with your last name.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text">Email adress:</span>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="userEmail"
+                      value=""
+                      name="userEmail"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">
+                      Please provide a valid email address.
+                    </div>
+                  </div>
+                </div>
 
-<form method="POST" action="/articles/create">
-  <div>
-    <label for="title">Title</label><br />
-    <input
-      type="text"
-      name="title"
-      value="<%= typeof article === 'undefined' ? '' : article.title %>"
-      maxlength="200"
-      required
-    />
-  </div>
+                <div class="col-md-6">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text">Phone number:</span>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="userPhoneNumber"
+                      name="userPhoneNumber"
+                      minlength="10"
+                      pattern="[0-9]*"
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">
+                      Please provide a valid phone number.
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div class="col-12">
+                  <button class="btn btn-primary" type="submit">
+                    Book now
+                  </button>
+                </div>
+                <a href="/articles">Cancel</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div>
-    <label for="content">Content</label><br />
-    <textarea name="content" required>
-<%= typeof article === 'undefined' ? '' : article.content %></textarea
-    >
-  </div>
+      <!-- </ULL SCREEN MODAL - OPTION 2> -->
+    </div>
 
-  <div>
-    <input type="checkbox" name="published" id="published" value='true' <%=
-    typeof article !== 'undefined' && article.published === 'true' ? 'checked' :
-    '' %>>
-    <label for="published">Publish</label>
-  </div>
-  <div>
-    <label for="date">Date</label><br />
-    <input type="date" name="date" required />
-  </div>
-  <div>
-    <label for="schedule">Schedule</label><br />
-    <input type="text" name="schedule" required />
-  </div>
-  <div>
-    <label for="index">Index</label><br />
-    <input type="number" name="index" required />
-  </div>
-
-  <div>
-    <button type="submit">Submit</button>
-    <a href="/articles">Cancel</a>
-  </div>
-</form>
-
-<% include ../layouts/article-footer %>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+  </body>
+</html>

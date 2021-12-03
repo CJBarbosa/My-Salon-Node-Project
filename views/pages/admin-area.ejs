@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <div class="container-xl">
+      <!-- Main -->
+      <div class="row mb-5">
+        <div class="col d-flex justify-content-between text-center card-header">
+          <a
+            href="change-password.html"
+            class="btn btn-outline-primary col-sm-3"
+            >Change Password</a
+          >
+          <h2 class="col-sm-6 mb-0">Admin Area</h2>
+          <a href="/" class="btn btn-outline-primary col-sm-3"
+            >Back to website/Logoff</a
+          >
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between">
+              <button
+                class="btn btn-outline-primary col-2"
+                onclick="previous()"
+              >
+                <<
+              </button>
+              <h3 class="col-8 text-center" id="monthAndYear"></h3>
+              <button class="btn btn-outline-primary col-2" onclick="next()">
+                >>
+              </button>
+            </div>
+            <table class="table table-bordered table-responsive-sm" id="table">
+              <thead id="calendar-head"></thead>
+              <tbody id="calendar-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <a href="/articles" class="btn btn-outline-primary col-sm-3"
+        >Events Create</a
+      >
+    </div>
+    <!-- Footer -->
+    <%- include('../layouts/footer'); %>
+  </body>
+</html>

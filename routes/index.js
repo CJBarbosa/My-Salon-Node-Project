@@ -10,6 +10,7 @@ router.get("/services", pagesController.services);
 router.get("/book-online", pagesController.bookOnline);
 router.get("/contact-us", pagesController.contactUS);
 router.get("/my-admin-area-login", pagesController.login);
+router.get("/admin-area", pagesController.adminArea);
 
 // Articles routes
 router.get("/articles", articlesController.list);

@@ -1,29 +1,55 @@
-<%- include ../layouts/article-header %>
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <div class="container-xl">
+      <!-- Main -->
 
-<h1><%= title %></h1>
+      <!-- <FULL SCREEN MODAL - OPTION 2> -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-1 text-center bg-light shadow">
+            <div class="card-header custonbgp h5" id="dateTitle">Date</div>
+            <div class="card-body m-height h-100">
+              <a
+                href="/articles/create"
+                class="btn btn-outline-primary col-sm-3 mb-3"
+                >Create a new schedule</a
+              >
 
-<ul>
-  <% articles.forEach((article) => { %>
-  <li>
-    <%= !article.published ? '(Draft) ' : '' %>
-    <a href="/articles/<%= article.id %>"
-      ><%= new Date(article.date).toUTCString().slice(0,16) %></a
-    >
+              <ul>
+                <% articles.forEach((article) => { %>
+                <li class="list-group-item">
+                  <%= !article.published ? '(Draft) ' : '' %>
+                  <a href="/articles/<%= article.id %>"
+                    ><%= new Date(article.date).toUTCString().slice(0,16) %></a
+                  >
 
-    <small> => <%= article.schedule %> => <%= article.index %></small>
-  </li>
-  <% }); %>
-</ul>
+                  <small>
+                    => <%= article.schedule %> => <%= article.index %></small
+                  >
+                </li>
+                <% }); %>
+              </ul>
 
-<div id="test"></div>
-<a href="/articles/create">Create new article</a>
+              <div id="test"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<script src="javascripts/custon.js"></script>
+      <!-- </ULL SCREEN MODAL - OPTION 2> -->
+    </div>
 
-<script>
-  // stringify the data passed from router to ejs (within the EJS template only)
-  var data = <%- JSON.stringify(articles) %>
-  //Passing it to js
-  test(data);
-</script>
-<%- include ../layouts/article-footer %>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+    <script>
+      // stringify the data passed from router to ejs (within the EJS template only)
+      var data = <%- JSON.stringify(articles) %>
+      //Passing it to js
+      test(data);
+    </script>
+  </body>
+</html>
