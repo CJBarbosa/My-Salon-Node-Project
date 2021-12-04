@@ -1,13 +1,18 @@
 <% include ../layouts/article-header %>
 
-<h1><%= !article.published ? '(Draft) ' : '' %> <%= article.title %></h1>
+<h3><%= new Date(article.date).toUTCString().slice(0,16) %></h3>
+<h3>First Name: <%= article.firstName %></h3>
+<h3>Last Name: <%= article.lastName %></h3>
+<h3>Email: <%= article.email %></h3>
+<h3>Phone: <%= article.phone %></h3>
+<h3>Schedule: <%= article.schedule %></h3>
+<h3>Index: <%= article.index %></h3>
+<hr />
+
 <small
   ><%= article.updatedAt.toLocaleString("en-US", {month: 'short', day:
   'numeric', year: 'numeric'}); %></small
 >
-<hr />
-
-<div><%= article.content %></div>
 
 <hr />
 <a href="/articles/<%= article.id %>/update" class="btn btn-info float-right"

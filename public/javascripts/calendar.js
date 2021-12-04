@@ -76,12 +76,14 @@ function showCalendar(month, year) {
         let cell = document.createElement("td");
         //Create link to call a modal to book a new schedule
         let acell = document.createElement("a");
-        acell.setAttribute("id", `${year}-${month + 1}-${date}`);
         //acell.setAttribute("data-bs-toggle", "modal");
         //acell.setAttribute("data-bs-target", "#fullScreenModal");
         //Call function passing date string to add in modal title and populate book hours
         //acell.setAttribute("onclick", 'DateValue($(this).attr("href"))');
-        acell.href = "/articles"; //`#${year}-${month + 1}-${date}`;
+        //('0'+date).slice(-2) make sure that 1...9 becames 01...09
+        acell.href = `/articles?date=${year}-${month + 1}-${("0" + date).slice(
+          -2
+        )}`;
         acell.className = "btn btn-outline-secondary";
         let cellText = document.createTextNode(date);
         if (

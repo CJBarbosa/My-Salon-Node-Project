@@ -19,22 +19,42 @@
                 >Create a new schedule</a
               >
 
-              <ul>
-                <% articles.forEach((article) => { %>
-                <li class="list-group-item">
-                  <%= !article.published ? '(Draft) ' : '' %>
-                  <a href="/articles/<%= article.id %>"
-                    ><%= new Date(article.date).toUTCString().slice(0,16) %></a
-                  >
-
-                  <small>
-                    => <%= article.schedule %> => <%= article.index %></small
-                  >
-                </li>
-                <% }); %>
-              </ul>
-
-              <div id="test"></div>
+              <table class="table">
+                <thead class="custonbgb">
+                  <tr>
+                    <th scope="col">SCHEDULE:</th>
+                    <th scope="col">NAME:</th>
+                    <th scope="col">PHONE:</th>
+                    <th scope="col">ACTION:</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% articles.forEach((article) => { %>
+                  <tr>
+                    <th scope="row"><%= article.schedule %></th>
+                    <td><%= article.firstName %> <%= article.lastName %></td>
+                    <td><%= article.phone %></td>
+                    <td>
+                      <a
+                        class="bk bk-detail btn btn-outline-success"
+                        href="/articles/<%= article.id %>"
+                        title="Details"
+                      ></a>
+                      <a
+                        class="bk bk-edit btn btn-outline-primary"
+                        href="#"
+                        title="Edit"
+                      ></a>
+                      <a
+                        class="bk bk-delete btn btn-outline-danger"
+                        href="#"
+                        title="Delete"
+                      ></a>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

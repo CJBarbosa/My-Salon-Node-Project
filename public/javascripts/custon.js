@@ -3,6 +3,7 @@
  */
 
 function test(articles) {
+  getClickedDate(articles[0].date.slice(0, -14));
   articles.forEach((article) => {
     console.log(article.index, "=>", article.schedule);
   });

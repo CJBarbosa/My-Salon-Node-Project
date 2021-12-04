@@ -4,24 +4,11 @@ const Article = require("../models/article");
 
 exports.validateForm = [
   // Validate the title and content fields.
-  body("title")
-    .trim()
-    .not()
-    .isEmpty()
-    .withMessage("Title is required.")
-    .isLength({ max: 200 })
-    .withMessage("Title should not exceed 200 characters.")
-    .matches(/^[\w'",.!?\- ]+$/)
-    .withMessage(
-      `Title should only contain letters, numbers, spaces, and '",.!?- characters.`
-    ),
-  body("content")
-    .trim()
-    .escape()
-    .isLength({ min: 3 })
-    .withMessage("Article content must be at least 3 characters.")
-    .isLength({ max: 5000 })
-    .withMessage("Article content should not exceed 5000 characters."),
+  body("firstName").trim().not().isEmpty().withMessage("Title is required."),
+  body("lastName").trim().not().isEmpty().withMessage("Title is required."),
+  body("email").trim().not().isEmpty().withMessage("Title is required."),
+  body("phone").trim().not().isEmpty().withMessage("Title is required."),
+  body("schedule").trim().not().isEmpty().withMessage("Title is required."),
 ];
 
 // GET /articles
@@ -30,7 +17,8 @@ exports.list = (req, res, next) => {
   let startingDate = "2021-12-01";
   let endDate = "2021-12-03";
   Article.find({ date: { $gte: startingDate, $lte: endDate } })*/
-  Article.find({ date: "2021-11-30" })
+  //const the_date = ;
+  Article.find({ date: req.query.date })
     .sort({ index: 1 })
     .limit(50)
     .exec((err, articles) => {
@@ -99,9 +87,10 @@ exports.updateView = (req, res, next) => {
 exports.update = async (req, res, next) => {
   // Specify the fields that can be updated. Assign id from the request route's id parameter.
   const article = {
-    title: req.body.title,
-    content: req.body.content,
-    published: req.body.published,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone,
     _id: req.params.id,
   };
   const errors = validationResult(req);

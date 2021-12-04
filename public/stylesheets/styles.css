@@ -216,3 +216,21 @@ body {
   box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1),
     inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
 }
+
+.bk-detail {
+  background: url(../images/eye.svg);
+}
+.bk-edit {
+  background: url(../images/pencil.svg);
+}
+
+.bk-delete {
+  background: url(../images/trash.svg);
+}
+
+.bk {
+  background-repeat: no-repeat;
+  background-size: 1rem 1rem;
+  background-position: center;
+  padding: 1rem;
+}
