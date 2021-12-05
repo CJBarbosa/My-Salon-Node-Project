@@ -8,7 +8,6 @@ exports.validateForm = [
   body("lastName").trim().not().isEmpty().withMessage("Title is required."),
   body("email").trim().not().isEmpty().withMessage("Title is required."),
   body("phone").trim().not().isEmpty().withMessage("Title is required."),
-  body("schedule").trim().not().isEmpty().withMessage("Title is required."),
 ];
 
 // GET /articles
@@ -20,14 +19,15 @@ exports.list = (req, res, next) => {
   //const the_date = ;
   Article.find({ date: req.query.date })
     .sort({ index: 1 })
-    .limit(50)
+    .limit(16)
     .exec((err, articles) => {
       if (err) {
         next(err);
       } else {
         res.render("articles/list", {
-          title: "Articles",
+          title: "Schedules",
           articles: articles,
+          date: req.query.date,
         });
       }
     });
@@ -40,14 +40,32 @@ exports.details = (req, res, next) => {
     if (err || !article) {
       next(createError(404));
     } else {
-      res.render("articles/details", { title: "Article", article: article });
+      res.render("articles/details", {
+        title: "Schedule Details",
+        article: article,
+      });
     }
   });
 };
 
 // GET /articles/create
 exports.createView = (req, res, next) => {
-  res.render("articles/create", { title: "Create Article" });
+  Article.find({ date: req.query.date })
+    .sort({ index: 1 })
+    .limit(16)
+    .exec((err, articles) => {
+      if (err) {
+        next(err);
+      } else {
+        res.render("articles/create", {
+          title: `Create an Appointment on ${new Date(req.query.date)
+            .toUTCString()
+            .slice(0, 16)}`,
+          articles: articles,
+          date: req.query.date,
+        });
+      }
+    });
 };
 
 // POST /articles/create
@@ -76,7 +94,7 @@ exports.updateView = (req, res, next) => {
       next(createError(404));
     } else {
       res.render("articles/update", {
-        title: "Update Article",
+        title: "Edit your Schedule Information",
         article: article,
       });
     }
@@ -116,7 +134,7 @@ exports.deleteView = (req, res, next) => {
       next(createError(404));
     } else {
       res.render("articles/delete", {
-        title: "Delete Account",
+        title: "Delete Schedule",
         article: article,
       });
     }
@@ -129,7 +147,7 @@ exports.delete = (req, res, next) => {
     if (err) {
       next(err);
     } else {
-      res.redirect("/articles");
+      res.redirect(`/articles?date=${req.body.date}`);
     }
   });
 };

@@ -1,22 +1,35 @@
-<% include ../layouts/article-header %>
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <%- include('../layouts/article-body-header'); %>
 
-<h3><%= new Date(article.date).toUTCString().slice(0,16) %></h3>
-<h3>First Name: <%= article.firstName %></h3>
-<h3>Last Name: <%= article.lastName %></h3>
-<h3>Email: <%= article.email %></h3>
-<h3>Phone: <%= article.phone %></h3>
-<h3>Schedule: <%= article.schedule %></h3>
-<h3>Index: <%= article.index %></h3>
-<hr />
+    <h5>
+      <small class="text-muted">First Name:</small>
+      <%= article.firstName %>
+    </h5>
+    <h5>
+      <small class="text-muted">Last Name:</small> <%= article.lastName %>
+    </h5>
+    <h5><small class="text-muted">Email:</small> <%= article.email %></h5>
+    <h5><small class="text-muted">Phone:</small> <%= article.phone %></h5>
+    <h5><small class="text-muted">Schedule:</small> <%= article.schedule %></h5>
+    <h5><small class="text-muted">Index:</small> <%= article.index %></h5>
+    <hr />
 
-<small
-  ><%= article.updatedAt.toLocaleString("en-US", {month: 'short', day:
-  'numeric', year: 'numeric'}); %></small
->
+    <small><%= (article.date).toUTCString().slice(0,16) %></small>
 
-<hr />
-<a href="/articles/<%= article.id %>/update" class="btn btn-info float-right"
-  >Update Article</a
->
+    <hr />
+    <a
+      href="/articles?date=<%= (article.date).toISOString().slice(0,10); %>"
+      class="btn btn-outline-primary"
+      >Close</a
+    >
 
-<% include ../layouts/article-footer %>
+    <%- include('../layouts/article-body-footer'); %>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+  </body>
+</html>

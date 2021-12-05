@@ -2,7 +2,57 @@
  * GLOBAL
  */
 
+function replyId(clicked_id) {
+  document.getElementById("index").value = clicked_id;
+  console.log(clicked_id);
+}
+
+function disableRadio(articles) {
+  articles.forEach((article) => {
+    document.getElementById(`${article.index}`).disabled = true;
+  });
+}
+
+//(Admin-Area /create) POPULATE HOURS TO BE BOOKED IN THE FORM: CREATE AN APPOINTMENT.
+function populateRadioHours() {
+  //populate hours to book as a inputs radio
+  let formCheck = document.getElementById("form-check-hours");
+  formCheck.innerHTML = ""; //Clear element to build everything new
+  let hours = "";
+  let _index = 0;
+  //Business open 9 to 17, create book option in every half hour
+  for (let hour = 9; hour < 17; hour += 0.5) {
+    hours =
+      hour % 1 === 0
+        ? `${hour}:00 - ${hour}:30`
+        : `${Math.trunc(hour)}:30 - ${hour + 0.5}:00`;
+    let inputRadio = document.createElement("input");
+    inputRadio.setAttribute("type", "radio");
+    inputRadio.classList.add("btn-check");
+    inputRadio.setAttribute("name", "schedule");
+    inputRadio.setAttribute("id", _index);
+    inputRadio.setAttribute("onClick", "replyId(this.id)");
+    inputRadio.required = true;
+    formCheck.appendChild(inputRadio);
+    let labelRadio = document.createElement("label");
+    labelRadio.classList.add("btn", "btn-outline-secondary");
+    labelRadio.setAttribute("for", _index);
+    let labelRadioTextNode = document.createTextNode(hours);
+    labelRadio.appendChild(labelRadioTextNode);
+    formCheck.appendChild(labelRadio);
+    hours = "";
+    _index++;
+  }
+  //Create invalid message feedback to show when needed
+  let divInvalidFeedback = document.createElement("div");
+  divInvalidFeedback.classList.add("invalid-feedback");
+  let iFTextNode = document.createTextNode("Please, chose a time.");
+  divInvalidFeedback.appendChild(iFTextNode);
+  formCheck.appendChild(divInvalidFeedback);
+}
+
 function test(articles) {
+  console.log(articles.length);
   getClickedDate(articles[0].date.slice(0, -14));
   articles.forEach((article) => {
     console.log(article.index, "=>", article.schedule);
@@ -61,12 +111,12 @@ window.addEventListener("load", function () {
  * BOOK ONLINE PAGE <--------------------------------------------------------
  */
 
-// Run only on Book Online page
+// Run only on Book Online page (OPTION 1)
 if (document.getElementById("book-online")) {
   //(OPTION 1) CREATE CARDS WITH HOURS TO BE BOOCKED IN THE BOOK NOW PAGE
   let fullDate = new Date(); //get the full date
   let TodayDate = fullDate.getDay(); //get the day of the week
-  //(OPTION 1 & 2 ) Options to be used to transform the numeral date to a string date.
+  //(OPTION 1 ) Options to be used to transform the numeral date to a string date.
   const options = {
     weekday: "long",
     year: "numeric",
@@ -125,7 +175,7 @@ if (document.getElementById("book-online")) {
     //To get the day title -> go up 2 levels in the tree and get first child text.
     let secondParent = elmnt.parentsUntil("col-12", ".card");
     let bookDate = secondParent.children(".card-header").text();
-    //transfre the date and hour text to the modal title.
+    //transfer the date and hour text to the modal title.
     document.getElementById(
       "modal-card-header"
     ).innerText = `${bookDate} - ${bookHour}`;
@@ -140,13 +190,14 @@ if (document.getElementById("book-online")) {
       onpick: () => {
         markClickDate(event), //
           $("#fullScreenModal").modal("show"), //SHOW MODAL WITH FORM (BOOK ONLINE PAGE)
-          getClickedDate(" ");
+          getClickedDate(" "),
+          populateHours();
       },
     });
   });
 }
 
-//(OPTION 2) ADD CLASS NAME ON CLICKED DATE AND MARK IT AS SELECTED USING CSS
+//(OPTION 2) ON DATE PICKER, ADD CLASS NAME ON CLICKED DATE AND MARK IT AS SELECTED USING CSS
 function markClickDate(e) {
   e.target.classList.add("picker-d-td");
 }
@@ -154,9 +205,9 @@ function markClickDate(e) {
 // (OPTION 2) GET DATE FROM DATE PICKER, TRANSFER IT TO MODAL TITLE
 function getClickedDate(anyString) {
   let inputValue = anyString; //If call came from (ADMIN AREA)
-  //get date and as number and convert it to string
+  //get date as number and convert it to string
   if (document.getElementById("input-pop")) {
-    //If call came from (BOOK ONLINE)
+    //If call came from (BOOK ONLINE - OPTION 2)
     inputValue = document.getElementById("input-pop").value;
   }
   let inputValueArray = inputValue.split("-");
@@ -164,7 +215,7 @@ function getClickedDate(anyString) {
   let theMonth = Number(inputValueArray[1]) - 1;
   let theDay = Number(inputValueArray[2]);
   let dateTitle = document.getElementById("dateTitle");
-  //(OPTION 1 & 2 ) Options to be used to transform the numeral date to a string date.
+  //(OPTION 2 ) Options to be used to transform the numeral date to a string date.
   const options = {
     weekday: "long",
     year: "numeric",
@@ -175,7 +226,7 @@ function getClickedDate(anyString) {
     "en-US",
     options
   );
-  populateHours();
+  //populateHours();
 }
 
 //(OPTION 2) POPULATE HOURS TO BE BOOKED IN THE FORM INSIDE MODAL.

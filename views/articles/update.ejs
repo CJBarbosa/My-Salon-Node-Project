@@ -1,43 +1,108 @@
-<% include ../layouts/article-header %>
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <%- include('../layouts/article-body-header'); %>
 
-<h1>Update Article</h1>
-
-<% include ../layouts/article-form-errors %>
-
-<form method="POST" action="/articles/<%= article._id %>/update">
-  <div>
-    <label for="title">Title</label><br />
-    <input
-      type="text"
-      name="title"
-      value="<%= typeof article === 'undefined' ? '' : article.title %>"
-      maxlength="200"
-      required
-    />
-  </div>
-
-  <div>
-    <label for="content">Content</label><br />
-    <textarea name="content" rows="10" required>
-<%= typeof article === 'undefined' ? '' : article.content %></textarea
+    <form
+      class="row g-3 needs-validation"
+      method="POST"
+      action="/articles/<%= article._id %>/update"
+      novalidate
     >
-  </div>
+      <h5>
+        <small>Schedule set to</small><%= typeof article === 'undefined' ? '' :
+        article.schedule %><small>hs on</small> <%= typeof article ===
+        'undefined' ? '' : (article.date).toUTCString().slice(0,16) %>.
+      </h5>
+      <h6>Please, make your changes.</h6>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">First name:</span>
+          <input
+            type="text"
+            class="form-control"
+            id="userFirstName"
+            value="<%= typeof article === 'undefined' ? '' : article.firstName %>"
+            name="firstName"
+            minlength="3"
+            pattern="^[a-zA-Z]*$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter with your first name.</div>
+        </div>
+      </div>
 
-  <div>
-    <input type="checkbox" name="published" id="published" value=true <%= typeof
-    article !== 'undefined' && article.published ? 'checked' : '' %> >
-    <label for="published">Publish</label>
-  </div>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Last name:</span>
+          <input
+            type="text"
+            class="form-control"
+            id="userLasttName"
+            value="<%= typeof article === 'undefined' ? '' : article.lastName %>"
+            name="lastName"
+            minlength="3"
+            pattern="^[a-zA-Z]*$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter with your last name.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Email adress:</span>
+          <input
+            type="email"
+            class="form-control"
+            id="userEmail"
+            value="<%= typeof article === 'undefined' ? '' : article.email %>"
+            name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">
+            Please provide a valid email address.
+          </div>
+        </div>
+      </div>
 
-  <div>
-    <button type="submit">Submit</button>
-    <a href="/articles/<%= article._id %>">Cancel</a>
-  </div>
-</form>
-
-<hr />
-
-<h3>Delete Article</h3>
-<a href="/articles/<%= article._id %>/delete">Delete</a>
-
-<% include ../layouts/article-footer %>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Phone number:</span>
+          <input
+            type="tel"
+            class="form-control"
+            id="userPhoneNumber"
+            value="<%= typeof article === 'undefined' ? '' : article.phone %>"
+            name="phone"
+            minlength="10"
+            pattern="[0-9]*"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">
+            Please provide a valid phone number.
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="col-12">
+        <button class="btn btn-outline-danger" type="submit">Update</button>
+        <a
+          href="/articles?date=<%= (article.date).toISOString().slice(0,10); %>"
+          class="btn btn-outline-primary ms-1"
+          >Cancel</a
+        >
+      </div>
+    </form>
+    <%- include('../layouts/article-body-footer'); %>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+  </body>
+</html>

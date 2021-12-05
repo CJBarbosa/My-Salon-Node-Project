@@ -4,133 +4,117 @@
     <%- include('../layouts/head'); %>
   </head>
   <body class="d-flex flex-column h-100" id="the-stylist">
-    <div class="container-xl">
-      <!-- Main -->
+    <%- include('../layouts/article-body-header'); %>
 
-      <!-- <FULL SCREEN MODAL - OPTION 2> -->
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-1 text-center bg-light shadow">
-            <div class="card-header custonbgp h5" id="dateTitle">Date</div>
-            <div class="card-body">
-              <form
-                class="row g-3 needs-validation"
-                method="POST"
-                action="/articles/create"
-                novalidate
-              >
-                <div class="col-12">
-                  <h6>Chose a time:</h6>
-                  <hr />
-                  <input
-                    type="hidden"
-                    id="bookDate"
-                    name="bookDate"
-                    value="<%= typeof article === 'undefined' ? '' : article.date %>"
-                  />
-                  <input
-                    type="hidden"
-                    id="BookPosition2"
-                    name="BookPosition"
-                    value="<%= typeof article === 'undefined' ? '' : article.index %>"
-                  />
-                  <div class="form-check ps-0" id="form-check-hours"></div>
-                  <hr />
-                </div>
-                <h6>Provide your information:</h6>
-                <div class="col-md-6">
-                  <div class="input-group has-validation">
-                    <span class="input-group-text">First name:</span>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="userFirstName"
-                      value=""
-                      name="userFirstName"
-                      minlength="3"
-                      pattern="^[a-zA-Z]*$"
-                      required
-                    />
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback">
-                      Please enter with your first name.
-                    </div>
-                  </div>
-                </div>
+    <form
+      class="row g-3 needs-validation"
+      method="POST"
+      action="/articles/create"
+      novalidate
+    >
+      <div class="col-12">
+        <h6>Chose a time:</h6>
+        <hr />
+        <input type="hidden" id="date" name="date" value="<%= date %>" />
+        <input type="hidden" id="index" name="index" value="" />
+        <div class="form-check ps-0" id="form-check-hours"></div>
+        <hr />
+      </div>
+      <h6>Provide your information:</h6>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">First name:</span>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            value=""
+            name="firstName"
+            minlength="3"
+            pattern="^[a-zA-Z]*$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter with your first name.</div>
+        </div>
+      </div>
 
-                <div class="col-md-6">
-                  <div class="input-group has-validation">
-                    <span class="input-group-text">Last name:</span>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="userLasttName"
-                      value=""
-                      name="userLasttName"
-                      minlength="3"
-                      pattern="^[a-zA-Z]*$"
-                      required
-                    />
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback">
-                      Please enter with your last name.
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="input-group has-validation">
-                    <span class="input-group-text">Email adress:</span>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="userEmail"
-                      value=""
-                      name="userEmail"
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                      required
-                    />
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback">
-                      Please provide a valid email address.
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="input-group has-validation">
-                    <span class="input-group-text">Phone number:</span>
-                    <input
-                      type="tel"
-                      class="form-control"
-                      id="userPhoneNumber"
-                      name="userPhoneNumber"
-                      minlength="10"
-                      pattern="[0-9]*"
-                      required
-                    />
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback">
-                      Please provide a valid phone number.
-                    </div>
-                  </div>
-                </div>
-                <hr />
-                <div class="col-12">
-                  <button class="btn btn-primary" type="submit">
-                    Book now
-                  </button>
-                </div>
-                <a href="/articles">Cancel</a>
-              </form>
-            </div>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Last name:</span>
+          <input
+            type="text"
+            class="form-control"
+            id="lasttName"
+            value=""
+            name="lasttName"
+            minlength="3"
+            pattern="^[a-zA-Z]*$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter with your last name.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Email adress:</span>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            value=""
+            name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">
+            Please provide a valid email address.
           </div>
         </div>
       </div>
 
-      <!-- </ULL SCREEN MODAL - OPTION 2> -->
-    </div>
-
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Phone number:</span>
+          <input
+            type="tel"
+            class="form-control"
+            id="phone"
+            name="phone"
+            minlength="10"
+            pattern="[0-9]*"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">
+            Please provide a valid phone number.
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="col-12">
+        <button class="btn btn-outline-danger" type="submit">Book now</button>
+        <a
+          href="/articles?date=<%= date %>"
+          class="btn btn-outline-primary ms-1"
+          >Cancel</a
+        >
+      </div>
+    </form>
+    <%- include('../layouts/article-body-footer'); %>
     <!-- Footer -->
     <%- include ../layouts/footer %>
+    <script>
+      // stringify the data passed from router to ejs (within the EJS template only)
+      //var data = ;
+      //Passing it to js
+      //test(data);
+      //Get date from Calendar and transfer it to Card header title
+      //getClickedDate(<%- JSON.stringify(articles) %>);
+      populateRadioHours();
+      disableRadio(<%- JSON.stringify(articles) %>);
+    </script>
   </body>
 </html>
