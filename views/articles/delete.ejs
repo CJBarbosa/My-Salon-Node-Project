@@ -16,10 +16,10 @@
       <form method='POST' action='/articles/<%= article._id %>/delete'>
         <input type="hidden" name="id" value="<%= article._id %>">
         <input type="hidden" name="date" value="<%= (article.date).toISOString().slice(0,10); %>">
-        <button type='submit' class="btn btn-outline-danger">Yes - Delete it.</button>
+        <button type='submit' class="btn btn-outline-danger col-sm-2">Yes - Delete it.</button>
         <a
         href="/articles?date=<%= (article.date).toISOString().slice(0,10); %>"
-        class="btn btn-outline-primary ms-1"
+        class="btn btn-outline-primary col-sm-2 ms-1"
         >No - Cancel</a>
         
       </form>

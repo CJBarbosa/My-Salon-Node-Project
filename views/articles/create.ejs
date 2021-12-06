@@ -7,10 +7,12 @@
     <%- include('../layouts/article-body-header'); %>
 
     <form
-      class="row g-3 needs-validation"
+      class="row g-3 was-validated"
       method="POST"
       action="/articles/create"
       novalidate
+      name="create"
+      id="create"
     >
       <div class="col-12">
         <h6>Chose a time:</h6>
@@ -35,7 +37,9 @@
             required
           />
           <div class="valid-feedback">Looks good!</div>
-          <div class="invalid-feedback">Please enter with your first name.</div>
+          <div class="invalid-feedback erro">
+            Please enter with your first name.
+          </div>
         </div>
       </div>
 
@@ -45,9 +49,9 @@
           <input
             type="text"
             class="form-control"
-            id="lasttName"
+            id="lastName"
             value=""
-            name="lasttName"
+            name="lastName"
             minlength="3"
             pattern="^[a-zA-Z]*$"
             required
@@ -95,10 +99,17 @@
       </div>
       <hr />
       <div class="col-12">
-        <button class="btn btn-outline-danger" type="submit">Book now</button>
+        <button
+          id="submitBtn"
+          class="btn btn-outline-danger col-sm-2"
+          type="submit"
+          disabled
+        >
+          Book now
+        </button>
         <a
           href="/articles?date=<%= date %>"
-          class="btn btn-outline-primary ms-1"
+          class="btn btn-outline-primary col-sm-2 ms-1"
           >Cancel</a
         >
       </div>
@@ -107,14 +118,34 @@
     <!-- Footer -->
     <%- include ../layouts/footer %>
     <script>
-      // stringify the data passed from router to ejs (within the EJS template only)
-      //var data = ;
-      //Passing it to js
-      //test(data);
-      //Get date from Calendar and transfer it to Card header title
-      //getClickedDate(<%- JSON.stringify(articles) %>);
+                                         // stringify the data passed from router to ejs (within the EJS template only)
+                                         //var data = ;
+                                         //Passing it to js
+                                         //test(data);
+                                         //Get date from Calendar and transfer it to Card header title
+                                         //getClickedDate(<%- JSON.stringify(articles) %>);
       populateRadioHours();
       disableRadio(<%- JSON.stringify(articles) %>);
+      //OnChange and validated, validate form enable submit button on form
+      var form = document.querySelector('form');
+      form.addEventListener('change', function() {
+
+
+            var curEl = document.querySelectorAll('.invalid-feedback');
+           // convert it to array:
+          //var myArray = [];for(var i = nl.length; i--; myArray.unshift(nl[i]));
+          // now find the visible (= with offsetWidth more than 0) item:
+          for (i =0; i < curEl.length; i++){
+           // var curEl = myArray[i];
+            if ((curEl[i].clientHeight || curEl[i].innerHeight) ){
+              document.getElementById("submitBtn").disabled = true;
+              console.log("return if")
+            }else{
+              document.getElementById("submitBtn").disabled = false;
+              console.log("return else")
+            }
+          }
+      });
     </script>
   </body>
 </html>

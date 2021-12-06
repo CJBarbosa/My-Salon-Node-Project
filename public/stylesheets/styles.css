@@ -83,7 +83,8 @@ body {
 
 /* Page Book-online, Page Admin area --------------------------------------------*/
 #book-online .btn,
-.admin-area .btn {
+.admin-area .btn,
+#form-check-hours .btn {
   margin: 0 4px 4px 0;
 }
 

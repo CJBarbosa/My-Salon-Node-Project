@@ -61,7 +61,14 @@
             you.
           </p>
           <form
-            class="needs-validation p-3 custonbgy -bg-light shadow"
+            class="
+              needs-validation
+              was-validated
+              p-3
+              custonbgy
+              -bg-light
+              shadow
+            "
             novalidate
             action="/contact-us"
             method="post"
@@ -83,7 +90,7 @@
                 Please, correct or enter with your name.
               </div>
             </div>
-            <div class="mb-3">
+            <!--div class="mb-3">
               <label for="emailvalidation" class="form-label"
                 >Email Address:</label
               >
@@ -131,7 +138,7 @@
               <div class="invalid-feedback">
                 Please enter with your message.
               </div>
-            </div>
+            </div -->
 
             <div class="form-check mb-3">
               <input
@@ -144,7 +151,12 @@
                 >Send me a copy</label
               >
             </div>
-            <button type="submit" class="btn btn-outline-dark -custonbgb">
+            <button
+              id="submit"
+              type="submit"
+              class="btn btn-outline-dark -custonbgb"
+              disabled
+            >
               Submit
             </button>
           </form>
@@ -168,5 +180,20 @@
     </div>
     <!-- Footer -->
     <%- include('../layouts/footer'); %>
+    <script>
+      $(document).ready(function () {
+        //document.getElementById("submit").disabled = false;
+
+        //document.getElementById('submit').click();
+        function myFunction() {
+          $("#create").removeClass("was-validated");
+          $("#create").addClass("needs-validation");
+        }
+        //setTimeout(() => {  $("#create").removeClass("was-validated"); }, 2000);
+
+        //setTimeout(() => {  $("#create").addClass("needs-validation"); }, 2000);
+        //$("#submitBtn").attr("disabled", false);
+      });
+    </script>
   </body>
 </html>
