@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <%- include('../layouts/event-body-header'); %>
+
+    <h5>
+      <small class="text-muted">First Name:</small>
+      <%= event.firstName %>
+    </h5>
+    <h5>
+      <small class="text-muted">Last Name:</small> <%= event.lastName %>
+    </h5>
+    <h5><small class="text-muted">Email:</small> <%= event.email %></h5>
+    <h5><small class="text-muted">Phone:</small> <%= event.phone %></h5>
+    <h5><small class="text-muted">Schedule:</small> <%= event.schedule %></h5>
+    <h5><small class="text-muted">Index:</small> <%= event.index %></h5>
+    <hr />
+
+    <small><%= (event.date).toUTCString().slice(0,16) %></small>
+
+    <hr />
+    <a
+      href="/events?date=<%= (event.date).toISOString().slice(0,10); %>"
+      class="btn btn-outline-primary col-sm-2"
+      >Close</a
+    >
+
+    <%- include('../layouts/event-body-footer'); %>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+  </body>
+</html>

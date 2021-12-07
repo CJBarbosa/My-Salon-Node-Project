@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const pagesController = require("../controllers/pagesController");
-const articlesController = require("../controllers/articlesController");
+const eventsController = require("../controllers/eventsController");
 
 // Pages routes
 router.get("/", pagesController.home);
@@ -12,22 +12,22 @@ router.get("/contact-us", pagesController.contactUS);
 router.get("/my-admin-area-login", pagesController.login);
 router.get("/admin-area", pagesController.adminArea);
 
-// Articles routes
-router.get("/articles", articlesController.list);
-router.get("/articles/create", articlesController.createView);
+// Events routes
+router.get("/events", eventsController.list);
+router.get("/events/create", eventsController.createView);
 router.post(
-  "/articles/create",
-  articlesController.validateForm,
-  articlesController.create
+  "/events/create",
+  eventsController.validateForm,
+  eventsController.create
 );
-router.get("/articles/:id", articlesController.details);
-router.get("/articles/:id/update", articlesController.updateView);
+router.get("/events/:id", eventsController.details);
+router.get("/events/:id/update", eventsController.updateView);
 router.post(
-  "/articles/:id/update",
-  articlesController.validateForm,
-  articlesController.update
+  "/events/:id/update",
+  eventsController.validateForm,
+  eventsController.update
 );
-router.get("/articles/:id/delete", articlesController.deleteView);
-router.post("/articles/:id/delete", articlesController.delete);
+router.get("/events/:id/delete", eventsController.deleteView);
+router.post("/events/:id/delete", eventsController.delete);
 
 module.exports = router;

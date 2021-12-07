@@ -4,12 +4,12 @@
     <%- include('../layouts/head'); %>
   </head>
   <body class="d-flex flex-column h-100" id="the-stylist">
-    <%- include('../layouts/article-body-header'); %>
+    <%- include('../layouts/event-body-header'); %>
 
     <form
       class="row g-3 was-validated"
       method="POST"
-      action="/articles/create"
+      action="/events/create"
       novalidate
       name="create"
       id="create"
@@ -108,13 +108,13 @@
           Book now
         </button>
         <a
-          href="/articles?date=<%= date %>"
+          href="/events?date=<%= date %>"
           class="btn btn-outline-primary col-sm-2 ms-1"
           >Cancel</a
         >
       </div>
     </form>
-    <%- include('../layouts/article-body-footer'); %>
+    <%- include('../layouts/event-body-footer'); %>
     <!-- Footer -->
     <%- include ../layouts/footer %>
     <script>
@@ -123,9 +123,9 @@
                                          //Passing it to js
                                          //test(data);
                                          //Get date from Calendar and transfer it to Card header title
-                                         //getClickedDate(<%- JSON.stringify(articles) %>);
+                                         //getClickedDate(<%- JSON.stringify(events) %>);
       populateRadioHours();
-      disableRadio(<%- JSON.stringify(articles) %>);
+      disableRadio(<%- JSON.stringify(events) %>);
       //OnChange and validated, validate form enable submit button on form
       var form = document.querySelector('form');
       form.addEventListener('change', function() {

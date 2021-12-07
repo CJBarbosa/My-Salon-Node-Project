@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const createError = require("http-errors");
-const Article = require("../models/article");
+const Event = require("../models/event");
 
 exports.validateForm = [
   // Validate the title and content fields.
@@ -10,101 +10,101 @@ exports.validateForm = [
   body("phone").trim().not().isEmpty().withMessage("Title is required."),
 ];
 
-// GET /articles
+// GET /events
 exports.list = (req, res, next) => {
   /* Search from-to dates
   let startingDate = "2021-12-01";
   let endDate = "2021-12-03";
-  Article.find({ date: { $gte: startingDate, $lte: endDate } })*/
+  Event.find({ date: { $gte: startingDate, $lte: endDate } })*/
   //const the_date = ;
-  Article.find({ date: req.query.date })
+  Event.find({ date: req.query.date })
     .sort({ index: 1 })
     .limit(16)
-    .exec((err, articles) => {
+    .exec((err, events) => {
       if (err) {
         next(err);
       } else {
-        res.render("articles/list", {
+        res.render("events/list", {
           title: "Schedules",
-          articles: articles,
+          events: events,
           date: req.query.date,
         });
       }
     });
 };
 
-// GET /articles/:id
+// GET /events/:id
 exports.details = (req, res, next) => {
-  Article.findById(req.params.id, (err, article) => {
+  Event.findById(req.params.id, (err, event) => {
     // if id not found mongoose throws CastError.
-    if (err || !article) {
+    if (err || !event) {
       next(createError(404));
     } else {
-      res.render("articles/details", {
+      res.render("events/details", {
         title: "Schedule Details",
-        article: article,
+        event: event,
       });
     }
   });
 };
 
-// GET /articles/create
+// GET /events/create
 exports.createView = (req, res, next) => {
-  Article.find({ date: req.query.date })
+  Event.find({ date: req.query.date })
     .sort({ index: 1 })
     .limit(16)
-    .exec((err, articles) => {
+    .exec((err, events) => {
       if (err) {
         next(err);
       } else {
-        res.render("articles/create", {
+        res.render("events/create", {
           title: `Create an Appointment on ${new Date(req.query.date)
             .toUTCString()
             .slice(0, 16)}`,
-          articles: articles,
+          events: events,
           date: req.query.date,
         });
       }
     });
 };
 
-// POST /articles/create
+// POST /events/create
 exports.create = (req, res, next) => {
   // Check request's validation result. Wrap errors in an object with useful functions.
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render("articles/create", {
-      article: req.body,
+    return res.render("events/create", {
+      event: req.body,
       errors: errors.array(),
     });
   }
-  Article.create(req.body, (err, article) => {
+  Event.create(req.body, (err, event) => {
     if (err) {
       return next(err);
     }
-    res.redirect(`/articles/${article.id}`);
+    res.redirect(`/events/${event.id}`);
   });
 };
 
-// GET /articles/:id/update
+// GET /events/:id/update
 exports.updateView = (req, res, next) => {
-  Article.findById(req.params.id, (err, article) => {
+  Event.findById(req.params.id, (err, event) => {
     // if id not found throws CastError.
-    if (err || !article) {
+    if (err || !event) {
       next(createError(404));
     } else {
-      res.render("articles/update", {
+      res.render("events/update", {
         title: "Edit your Schedule Information",
-        article: article,
+        event: event,
       });
     }
   });
 };
 
-// POST /articles/:id/update
+// POST /events/:id/update
 exports.update = async (req, res, next) => {
   // Specify the fields that can be updated. Assign id from the request route's id parameter.
-  const article = {
+  const event = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
@@ -113,41 +113,41 @@ exports.update = async (req, res, next) => {
   };
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render("articles/update", {
-      article: article,
+    return res.render("events/update", {
+      event: event,
       errors: errors.array(),
     });
   }
-  Article.findByIdAndUpdate(req.params.id, article, { new: true }, (err) => {
+  Event.findByIdAndUpdate(req.params.id, event, { new: true }, (err) => {
     if (err) {
       return next(err);
     }
-    res.redirect(`/articles/${article._id}`);
+    res.redirect(`/events/${event._id}`);
   });
 };
 
-// GET /articles/:id/delete
+// GET /events/:id/delete
 exports.deleteView = (req, res, next) => {
-  Article.findById(req.params.id, (err, article) => {
+  Event.findById(req.params.id, (err, event) => {
     // if id not found throws CastError.
-    if (err || !article) {
+    if (err || !event) {
       next(createError(404));
     } else {
-      res.render("articles/delete", {
+      res.render("events/delete", {
         title: "Delete Schedule",
-        article: article,
+        event: event,
       });
     }
   });
 };
 
-// POST articles/:id/delete
+// POST events/:id/delete
 exports.delete = (req, res, next) => {
-  Article.findByIdAndRemove(req.body.id, (err) => {
+  Event.findByIdAndRemove(req.body.id, (err) => {
     if (err) {
       next(err);
     } else {
-      res.redirect(`/articles?date=${req.body.date}`);
+      res.redirect(`/events?date=${req.body.date}`);
     }
   });
 };

@@ -4,10 +4,10 @@
     <%- include('../layouts/head'); %>
   </head>
   <body class="d-flex flex-column h-100" id="the-stylist">
-    <%- include('../layouts/article-body-header'); %>
+    <%- include('../layouts/event-body-header'); %>
 
     <a
-      href="/articles/create?date=<%= date %>"
+      href="/events/create?date=<%= date %>"
       class="btn btn-outline-danger col-sm-3 mb-3"
       >Create a new schedule</a
     >
@@ -25,25 +25,25 @@
         </tr>
       </thead>
       <tbody>
-        <% articles.forEach((article) => { %>
+        <% events.forEach((event) => { %>
         <tr>
-          <th scope="row"><%= article.schedule %></th>
-          <td><%= article.firstName %> <%= article.lastName %></td>
-          <td><%= article.phone %></td>
+          <th scope="row"><%= event.schedule %></th>
+          <td><%= event.firstName %> <%= event.lastName %></td>
+          <td><%= event.phone %></td>
           <td>
             <a
               class="bk bk-detail btn btn-outline-success"
-              href="/articles/<%= article.id %>"
+              href="/events/<%= event.id %>"
               title="Details"
             ></a>
             <a
               class="bk bk-edit btn btn-outline-primary"
-              href="/articles/<%= article.id %>/update"
+              href="/events/<%= event.id %>/update"
               title="Edit"
             ></a>
             <a
               class="bk bk-delete btn btn-outline-danger"
-              href="/articles/<%= article._id %>/delete"
+              href="/events/<%= event._id %>/delete"
               title="Delete"
             ></a>
           </td>
@@ -52,11 +52,11 @@
       </tbody>
     </table>
     <h3>
-      <%= articles.length <= 0 ? "Sorry! there's no schedules to be shown" : ''
+      <%= events.length <= 0 ? "Sorry! there's no schedules to be shown" : ''
       %>
     </h3>
 
-    <%- include('../layouts/article-body-footer'); %>
+    <%- include('../layouts/event-body-footer'); %>
     <!-- Footer -->
     <%- include ../layouts/footer %>
     <script>

@@ -4,18 +4,18 @@
     <%- include('../layouts/head'); %>
   </head>
   <body class="d-flex flex-column h-100" id="the-stylist">
-    <%- include('../layouts/article-body-header'); %>
+    <%- include('../layouts/event-body-header'); %>
 
     <form
       class="row g-3 needs-validation"
       method="POST"
-      action="/articles/<%= article._id %>/update"
+      action="/events/<%= event._id %>/update"
       novalidate
     >
       <h5>
-        <small>Schedule set to</small><%= typeof article === 'undefined' ? '' :
-        article.schedule %><small>hs on</small> <%= typeof article ===
-        'undefined' ? '' : (article.date).toUTCString().slice(0,16) %>.
+        <small>Schedule set to</small><%= typeof event === 'undefined' ? '' :
+        event.schedule %><small>hs on</small> <%= typeof event ===
+        'undefined' ? '' : (event.date).toUTCString().slice(0,16) %>.
       </h5>
       <h6>Please, make your changes.</h6>
       <div class="col-md-6">
@@ -25,7 +25,7 @@
             type="text"
             class="form-control"
             id="userFirstName"
-            value="<%= typeof article === 'undefined' ? '' : article.firstName %>"
+            value="<%= typeof event === 'undefined' ? '' : event.firstName %>"
             name="firstName"
             minlength="3"
             pattern="^[a-zA-Z]*$"
@@ -43,7 +43,7 @@
             type="text"
             class="form-control"
             id="userLasttName"
-            value="<%= typeof article === 'undefined' ? '' : article.lastName %>"
+            value="<%= typeof event === 'undefined' ? '' : event.lastName %>"
             name="lastName"
             minlength="3"
             pattern="^[a-zA-Z]*$"
@@ -60,7 +60,7 @@
             type="email"
             class="form-control"
             id="userEmail"
-            value="<%= typeof article === 'undefined' ? '' : article.email %>"
+            value="<%= typeof event === 'undefined' ? '' : event.email %>"
             name="email"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             required
@@ -79,7 +79,7 @@
             type="tel"
             class="form-control"
             id="userPhoneNumber"
-            value="<%= typeof article === 'undefined' ? '' : article.phone %>"
+            value="<%= typeof event === 'undefined' ? '' : event.phone %>"
             name="phone"
             minlength="10"
             pattern="[0-9]*"
@@ -97,13 +97,13 @@
           Update
         </button>
         <a
-          href="/articles?date=<%= (article.date).toISOString().slice(0,10); %>"
+          href="/events?date=<%= (event.date).toISOString().slice(0,10); %>"
           class="btn btn-outline-primary col-sm-2 ms-1"
           >Cancel</a
         >
       </div>
     </form>
-    <%- include('../layouts/article-body-footer'); %>
+    <%- include('../layouts/event-body-footer'); %>
     <!-- Footer -->
     <%- include ../layouts/footer %>
   </body>

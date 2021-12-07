@@ -4,27 +4,27 @@
     <%- include('../layouts/head'); %>
   </head>
   <body class="d-flex flex-column h-100" id="the-stylist">
-    <%- include('../layouts/article-body-header'); %>
+    <%- include('../layouts/event-body-header'); %>
     <h5 class="">
       Are you sure you want to delete
       <span class="text-decoration-underline"
-        ><%= typeof article === 'undefined' ? '' : article.firstName %>'s</span
+        ><%= typeof event === 'undefined' ? '' : event.firstName %>'s</span
       >
       schedule?
     </h5>
     <p>                
-      <form method='POST' action='/articles/<%= article._id %>/delete'>
-        <input type="hidden" name="id" value="<%= article._id %>">
-        <input type="hidden" name="date" value="<%= (article.date).toISOString().slice(0,10); %>">
+      <form method='POST' action='/events/<%= event._id %>/delete'>
+        <input type="hidden" name="id" value="<%= event._id %>">
+        <input type="hidden" name="date" value="<%= (event.date).toISOString().slice(0,10); %>">
         <button type='submit' class="btn btn-outline-danger col-sm-2">Yes - Delete it.</button>
         <a
-        href="/articles?date=<%= (article.date).toISOString().slice(0,10); %>"
+        href="/events?date=<%= (event.date).toISOString().slice(0,10); %>"
         class="btn btn-outline-primary col-sm-2 ms-1"
         >No - Cancel</a>
         
       </form>
     </p>
-    <%- include('../layouts/article-body-footer'); %>
+    <%- include('../layouts/event-body-footer'); %>
     <!-- Footer -->
     <%- include ../layouts/footer %>
   </body>

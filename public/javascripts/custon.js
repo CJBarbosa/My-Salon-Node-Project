@@ -34,12 +34,7 @@ window.addEventListener("load", function () {
           if (!form.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
-            console.log("not ok");
-          }
-          if (form.checkValidity()) {
-            console.log("ok");
-          }
-
+          }          
           form.classList.add("was-validated");
         },
         false
@@ -258,9 +253,9 @@ function replyId(clicked_id) {
 }
 
 //If schedule exist, desable radio buton making it not available to be selected.
-function disableRadio(articles) {
-  articles.forEach((article) => {
-    document.getElementById(`${article.index}`).disabled = true;
+function disableRadio(events) {
+  events.forEach((event) => {
+    document.getElementById(`${event.index}`).disabled = true;
   });
 }
 

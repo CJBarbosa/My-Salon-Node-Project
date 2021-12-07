@@ -81,7 +81,7 @@ function showCalendar(month, year) {
         //Call function passing date string to add in modal title and populate book hours
         //acell.setAttribute("onclick", 'DateValue($(this).attr("href"))');
         //('0'+date).slice(-2) make sure that 1...9 becames 01...09
-        acell.href = `/articles?date=${year}-${month + 1}-${("0" + date).slice(
+        acell.href = `/events?date=${year}-${month + 1}-${("0" + date).slice(
           -2
         )}`;
         acell.className = "btn btn-outline-secondary";
