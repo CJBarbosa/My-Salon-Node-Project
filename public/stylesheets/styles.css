@@ -88,6 +88,12 @@ body {
   margin: 0 4px 4px 0;
 }
 
+.disableLink {
+  pointer-events: none;
+  cursor: default;
+  background-color: rgb(231, 229, 229);
+}
+
 /* Page event: /creat /list --------------------------------------------*/
 .m-height {
   min-height: 80vh;

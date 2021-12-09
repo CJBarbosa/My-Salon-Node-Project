@@ -2,6 +2,27 @@
  * GLOBAL
  */
 
+//If schedule exist, desable OPTION 1 Link making it not available to be selected.
+function disableLink(events) {
+  const cardDate = document.getElementsByClassName("card-header");
+
+  events.forEach((event) => {
+    document.getElementById(`${event.index}`).disabled = true;
+  });
+}
+function teste(events) {
+  console.log(events);
+  var today = new Date();
+  events.forEach((event) => {
+    today = new Date(event.date);
+    console.log(today.getDay());
+    if (today.getDay() == 0) {
+      console.log("sunday");
+    }
+    //console.log(event.date);
+  });
+}
+
 //MARK THE CURRENT PAGE NAVEBAR AS SELECTED
 window.onload = function get_body() {
   //Get the page id of the current page
@@ -34,7 +55,7 @@ window.addEventListener("load", function () {
           if (!form.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
-          }          
+          }
           form.classList.add("was-validated");
         },
         false
@@ -67,20 +88,24 @@ if (document.getElementById("book-online")) {
     let divCardHeader = document.createElement("div");
     divCardHeader.classList.add("card-header", "custonbgp");
     let textNode = document.createTextNode(
-      fullDate.toLocaleString("en-US", options)
+      fullDate.toLocaleString("en-CA", options)
     );
     divCardHeader.appendChild(textNode);
     card.appendChild(divCardHeader);
     let divCardBody = document.createElement("div");
     divCardBody.classList.add("card-body");
     if (TodayDate !== 0) {
+      let index = 0;
       for (hour = 9; hour < 17; hour += 0.5) {
         let aElement = document.createElement("a");
-        aElement.classList.add("btn", "btn-outline-secondary");
+        aElement.classList.add("btn", "btn-outline-secondary", "book-link");
         aElement.href = "#";
-        aElement.setAttribute("data-bs-toggle", "modal");
-        aElement.setAttribute("data-bs-target", "#fullScreenWeekModal");
-        aElement.setAttribute("onclick", "transferTitle($(this))");
+        aElement.setAttribute(
+          "id",
+          `${new Date(fullDate).toLocaleDateString("en-CA")}_${index}`
+        );
+        //aElement.setAttribute("data-bs-target", "#fullScreenWeekModal");
+        //aElement.setAttribute("onclick", "transferTitle($(this))");
         if (hour % 1 === 0) {
           //Verify if it is interger to print hours properly
           let textNode = document.createTextNode(`${hour}:00 - ${hour}:30`);
@@ -92,6 +117,7 @@ if (document.getElementById("book-online")) {
           aElement.appendChild(textNode);
         }
         divCardBody.appendChild(aElement);
+        index++;
       }
     } else {
       //Sunday - Not a working day

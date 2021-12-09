@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pagesController = require("../controllers/pagesController");
 const eventsController = require("../controllers/eventsController");
+const bookController = require("../controllers/bookController");
 
 // Pages routes
 router.get("/", pagesController.home);
@@ -11,6 +12,9 @@ router.get("/book-online", pagesController.bookOnline);
 router.get("/contact-us", pagesController.contactUS);
 router.get("/my-admin-area-login", pagesController.login);
 router.get("/admin-area", pagesController.adminArea);
+
+//Book routers
+router.get("/book-list", bookController.list);
 
 // Events routes
 router.get("/events", eventsController.list);
