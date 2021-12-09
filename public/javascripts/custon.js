@@ -1,27 +1,31 @@
 /*
  * GLOBAL
  */
-
-//If schedule exist, desable OPTION 1 Link making it not available to be selected.
-function disableLink(events) {
-  const cardDate = document.getElementsByClassName("card-header");
-
-  events.forEach((event) => {
-    document.getElementById(`${event.index}`).disabled = true;
-  });
-}
-function teste(events) {
-  console.log(events);
-  var today = new Date();
-  events.forEach((event) => {
-    today = new Date(event.date);
-    console.log(today.getDay());
-    if (today.getDay() == 0) {
-      console.log("sunday");
+function populateSchedule(index){
+  console.log(index);
+  let _index = 0;
+  for (let hour = 9; hour < 17; hour += 0.5) {
+    hours =
+      hour % 1 === 0
+        ? `${hour}:00 - ${hour}:30`
+        : `${Math.trunc(hour)}:30 - ${hour + 0.5}:00`;
+    if(index == _index){
+      document.getElementById("schedule").value = hours;
+      document.getElementById("dateTitle").innerText += `, from: ${hours}`;      
+      return;
     }
-    //console.log(event.date);
-  });
+    hours = "";
+    _index++;
+  }
+
 }
+
+
+
+
+
+
+
 
 //MARK THE CURRENT PAGE NAVEBAR AS SELECTED
 window.onload = function get_body() {
@@ -99,7 +103,7 @@ if (document.getElementById("book-online")) {
       for (hour = 9; hour < 17; hour += 0.5) {
         let aElement = document.createElement("a");
         aElement.classList.add("btn", "btn-outline-secondary", "book-link");
-        aElement.href = "#";
+        aElement.href = `/books/create/${new Date(fullDate).toLocaleDateString("en-CA")}/${index}`;
         aElement.setAttribute(
           "id",
           `${new Date(fullDate).toLocaleDateString("en-CA")}_${index}`
@@ -142,6 +146,18 @@ if (document.getElementById("book-online")) {
       "modal-card-header"
     ).innerText = `${bookDate} - ${bookHour}`;
   }
+
+  //(OPTION 1) CHECK FOR BOOKED EVENTS AND MARK THEM AS NOT AVAILABLE TO BOOK BY DISABLE THE ANCHOR LINK
+  function disableLink(events) {
+    const arrayBookLink = document.getElementsByClassName("book-link");
+    //Iterate through all events from DB
+    events.forEach((event) => {
+    //Get array with dates from the Cards
+     let bookLink = document.getElementsByClassName("book-link").namedItem(`${event.date.slice(0,10)}_${event.index}`);
+     bookLink.classList.add("disableLink");
+     bookLink.href ="javascript:void(0)";
+    });
+}
 
   // (OPTION 2) START DATE PICKER - ATTACH IT ON LOAD
   window.addEventListener("load", () => {

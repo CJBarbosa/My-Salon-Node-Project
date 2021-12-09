@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <%- include('../layouts/event-body-header'); %>
+
+    <form
+      class="row g-3 was-validated"
+      method="POST"
+      action="/books/create"
+      novalidate
+      name="create"
+      id="create"
+    >
+      <div class="col-12">        
+    
+        <input type="hidden" id="date" name="date" value="<%= date %>" />
+        <input type="hidden" id="index" name="index" value="<%= index %>" />
+        <input type="hidden" id="schedule" name="schedule" value="" />          
+        
+      </div>
+      <h6>Provide your information:</h6>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">First name:</span>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            value=""
+            name="firstName"
+            minlength="3"
+            pattern="^[a-zA-Z]*$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback erro">
+            Please enter with your first name.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Last name:</span>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            value=""
+            name="lastName"
+            minlength="3"
+            pattern="^[a-zA-Z]*$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter with your last name.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Email adress:</span>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            value=""
+            name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">
+            Please provide a valid email address.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="input-group has-validation">
+          <span class="input-group-text">Phone number:</span>
+          <input
+            type="tel"
+            class="form-control"
+            id="phone"
+            name="phone"
+            minlength="10"
+            pattern="[0-9]*"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">
+            Please provide a valid phone number.
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="col-12">
+        <button
+          id="submitBtn"
+          class="btn btn-outline-danger col-sm-2"
+          type="submit"
+          disabled
+        >
+          Book now
+        </button>
+        <a
+          href="/events?date=<%= date %>"
+          class="btn btn-outline-primary col-sm-2 ms-1"
+          >Cancel</a
+        >
+      </div>
+    </form>
+    <%- include('../layouts/event-body-footer'); %>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+    <script>    
+      const index = (<%- JSON.stringify(index) %>);
+      populateSchedule(index);          
+         
+      //OnChange and validated, validate form enable submit button on form
+      var form = document.querySelector('form');
+      form.addEventListener('change', function() {
+            var curEl = document.querySelectorAll('.invalid-feedback');
+           // convert it to array:
+          //var myArray = [];for(var i = nl.length; i--; myArray.unshift(nl[i]));
+          // now find the visible (= with offsetWidth more than 0) item:
+          for (i =0; i < curEl.length; i++){
+           // var curEl = myArray[i];
+            if ((curEl[i].clientHeight || curEl[i].innerHeight) ){
+              document.getElementById("submitBtn").disabled = true;             
+            }else{
+              document.getElementById("submitBtn").disabled = false;             
+            }
+          }
+      });
+    </script>
+  </body>
+</html>

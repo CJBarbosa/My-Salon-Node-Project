@@ -63,24 +63,14 @@
             accommodate your schedule.
           </p>
         </div>
-      </div>
-      <h3><%= today = (events[0].date).toUTCString().slice(0,16) %></h3>
+      </div>      
     </div>
 
     <!-- Footer -->
     <%- include('../layouts/footer'); %>
     <script>
       const events = (<%- JSON.stringify(events) %>);
-      disableLink(events);
-      function disableLink(events) {
-          const arrayBookLink = document.getElementsByClassName("book-link");
-          //Iterate through all events from DB
-          events.forEach((event) => {
-          //Get array with dates from the Cards
-           let bookLink = document.getElementsByClassName("book-link").namedItem(`${event.date.slice(0,10)}_${event.index}`);
-           bookLink.classList.add("disableLink");
-          });
-      }
+      disableLink(events);      
     </script>
   </body>
 </html>

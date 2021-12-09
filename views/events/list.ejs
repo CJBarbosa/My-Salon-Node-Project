@@ -29,7 +29,8 @@
         <tr>
           <th scope="row"><%= event.schedule %></th>
           <td><%= event.firstName %> <%= event.lastName %></td>
-          <td><%= event.phone %></td>
+          <td><%= event.phone.replace(/\D+/g, '')
+            .replace(/(\d{3})(\d{3})(\d{4})/, '($1)$2-$3'); %></td>
           <td>
             <a
               class="bk bk-detail btn btn-outline-success"
