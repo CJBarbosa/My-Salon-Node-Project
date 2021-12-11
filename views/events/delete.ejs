@@ -6,9 +6,10 @@
   <body class="d-flex flex-column h-100" id="the-stylist">
     <%- include('../layouts/event-body-header'); %>
     <h5 class="">
-      Are you sure you want to delete
+      Confirm that you want to delete
       <span class="text-decoration-underline"
-        ><%= typeof event === 'undefined' ? '' : event.firstName %>'s</span
+        ><%= typeof event === 'undefined' ? '' : event.firstName %> 
+        <%= typeof event === 'undefined' ? '' : event.lastName %></span
       >
       schedule?
     </h5>

@@ -41,7 +41,7 @@ exports.details = (req, res, next) => {
       next(createError(404));
     } else {
       res.render("events/details", {
-        title: "Schedule successfully created",
+        title: "Schedule Details",
         event: event,
       });
     }

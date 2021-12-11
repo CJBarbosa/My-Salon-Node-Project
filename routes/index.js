@@ -21,6 +21,7 @@ router.post(
   booksController.validateForm,
   booksController.create
 );
+router.get("/books/books", booksController.books);
 router.get("/books/:id", booksController.details);
 
 // Events routes

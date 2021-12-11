@@ -10,8 +10,16 @@ exports.validateForm = [
   body("phone").trim().not().isEmpty().withMessage("Title is required."),
 ];
 
+// GET /books/books
+exports.books = (req, res) => {
+  res.render("books/books", {
+    title: "Create an Appointment",
+    option: req.query.option,
+  });
+};
+
 // GET /books
-exports.list = (req, res, next) => {  
+exports.list = (req, res, next) => {
   Event.find({
     date: {
       $gte: new Date().toLocaleDateString("en-CA"),
@@ -33,16 +41,39 @@ exports.list = (req, res, next) => {
     });
 };
 
-// GET /books/create
-exports.createView = (req, res, next) => {  
+// GET /events/create
+exports.createView = (req, res, next) => {
+  Event.find({ date: req.params.date })
+    .sort({ index: 1 })
+    .limit(16)
+    .exec((err, events) => {
+      if (err) {
+        next(err);
+      } else {
+        res.render("books/create", {
+          title: `Create an Appointment on ${new Date(req.params.date)
+            .toUTCString()
+            .slice(0, 16)}`,
+          date: req.params.date,
+          index: req.params.index,
+          option: req.query.option,
+          events: events,
+        });
+      }
+    });
+};
+
+/*/ GET /books/create
+exports.createView = (req, res, next) => {
   res.render("books/create", {
     title: `Create an Appointment on ${new Date(req.params.date)
-    .toUTCString()
-    .slice(0, 16)}`,
+      .toUTCString()
+      .slice(0, 16)}`,
     date: req.params.date,
-    index: req.params.index,    
+    index: req.params.index,
+    option: req.query.option,
   });
-};
+};*/
 
 // POST /books/create
 exports.create = (req, res, next) => {
@@ -62,7 +93,7 @@ exports.create = (req, res, next) => {
   });
 };
 
-// GET /events/:id
+// GET /books/:id
 exports.details = (req, res, next) => {
   Event.findById(req.params.id, (err, event) => {
     // if id not found mongoose throws CastError.

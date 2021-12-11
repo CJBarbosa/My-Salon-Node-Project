@@ -1,31 +1,6 @@
 /*
  * GLOBAL
  */
-function populateSchedule(index){
-  console.log(index);
-  let _index = 0;
-  for (let hour = 9; hour < 17; hour += 0.5) {
-    hours =
-      hour % 1 === 0
-        ? `${hour}:00 - ${hour}:30`
-        : `${Math.trunc(hour)}:30 - ${hour + 0.5}:00`;
-    if(index == _index){
-      document.getElementById("schedule").value = hours;
-      document.getElementById("dateTitle").innerText += `, from: ${hours}`;      
-      return;
-    }
-    hours = "";
-    _index++;
-  }
-
-}
-
-
-
-
-
-
-
 
 //MARK THE CURRENT PAGE NAVEBAR AS SELECTED
 window.onload = function get_body() {
@@ -71,6 +46,23 @@ window.addEventListener("load", function () {
 /*
  * BOOK ONLINE PAGE <--------------------------------------------------------
  */
+//Used on OPTION 1 to convert index in schedule time
+function populateSchedule(index) {
+  let _index = 0;
+  for (let hour = 9; hour < 17; hour += 0.5) {
+    hours =
+      hour % 1 === 0
+        ? `${hour}:00 - ${hour}:30`
+        : `${Math.trunc(hour)}:30 - ${hour + 0.5}:00`;
+    if (index == _index) {
+      document.getElementById("schedule").value = hours;
+      document.getElementById("dateTitle").innerText += `, from: ${hours}`;
+      return;
+    }
+    hours = "";
+    _index++;
+  }
+}
 
 // Run only on Book Online page (OPTION 1)
 if (document.getElementById("book-online")) {
@@ -103,7 +95,9 @@ if (document.getElementById("book-online")) {
       for (hour = 9; hour < 17; hour += 0.5) {
         let aElement = document.createElement("a");
         aElement.classList.add("btn", "btn-outline-secondary", "book-link");
-        aElement.href = `/books/create/${new Date(fullDate).toLocaleDateString("en-CA")}/${index}`;
+        aElement.href = `/books/create/${new Date(fullDate).toLocaleDateString(
+          "en-CA"
+        )}/${index}`;
         aElement.setAttribute(
           "id",
           `${new Date(fullDate).toLocaleDateString("en-CA")}_${index}`
@@ -135,7 +129,7 @@ if (document.getElementById("book-online")) {
     TodayDate < 6 ? TodayDate++ : (TodayDate = 0);
   }
 
-  //(OPTION 1) GET DATE TITLE FROM OPTION 1 AND ADD IT TO MODAL TITLE
+  /*/(OPTION 1) GET DATE TITLE FROM OPTION 1 AND ADD IT TO MODAL TITLE
   function transferTitle(elmnt) {
     let bookHour = elmnt.text(); //Get hour selected by user
     //To get the day title -> go up 2 levels in the tree and get first child text.
@@ -145,19 +139,21 @@ if (document.getElementById("book-online")) {
     document.getElementById(
       "modal-card-header"
     ).innerText = `${bookDate} - ${bookHour}`;
-  }
+  }*/
 
   //(OPTION 1) CHECK FOR BOOKED EVENTS AND MARK THEM AS NOT AVAILABLE TO BOOK BY DISABLE THE ANCHOR LINK
   function disableLink(events) {
     const arrayBookLink = document.getElementsByClassName("book-link");
     //Iterate through all events from DB
     events.forEach((event) => {
-    //Get array with dates from the Cards
-     let bookLink = document.getElementsByClassName("book-link").namedItem(`${event.date.slice(0,10)}_${event.index}`);
-     bookLink.classList.add("disableLink");
-     bookLink.href ="javascript:void(0)";
+      //Get array with dates from the Cards
+      let bookLink = document
+        .getElementsByClassName("book-link")
+        .namedItem(`${event.date.slice(0, 10)}_${event.index}`);
+      bookLink.classList.add("disableLink");
+      bookLink.href = "javascript:void(0)";
     });
-}
+  }
 
   // (OPTION 2) START DATE PICKER - ATTACH IT ON LOAD
   window.addEventListener("load", () => {
@@ -167,9 +163,11 @@ if (document.getElementById("book-online")) {
       yrange: 2, // ALLOW +/- 2 YEARS FROM NOW (DEFAULT 10)
       onpick: () => {
         markClickDate(event), //
-          $("#fullScreenModal").modal("show"), //SHOW MODAL WITH FORM (BOOK ONLINE PAGE)
-          getClickedDate(" "),
-          populateHours();
+          // getClickedDate(" "),
+          //populateHours(),
+          (window.location.href = `/books/create/${
+            document.getElementById("input-pop").value
+          }/16?option=2`);
       },
     });
   });
@@ -181,13 +179,14 @@ function markClickDate(e) {
 }
 
 // (OPTION 2) GET DATE FROM DATE PICKER, TRANSFER IT TO MODAL TITLE
-function getClickedDate(anyString) {
-  let inputValue = anyString; //If call came from (ADMIN AREA)
+//function getClickedDate(anyString) {
+function getClickedDate(inputValue) {
+  /*let inputValue = anyString; //If call came from (ADMIN AREA)
   //get date as number and convert it to string
   if (document.getElementById("input-pop")) {
     //If call came from (BOOK ONLINE - OPTION 2)
     inputValue = document.getElementById("input-pop").value;
-  }
+  }*/
   let inputValueArray = inputValue.split("-");
   let theYear = Number(inputValueArray[0]);
   let theMonth = Number(inputValueArray[1]) - 1;
@@ -207,8 +206,8 @@ function getClickedDate(anyString) {
   //populateHours();
 }
 
-//(OPTION 2) POPULATE HOURS TO BE BOOKED IN THE FORM INSIDE MODAL.
-function populateHours() {
+/*/(OPTION 2) POPULATE HOURS TO BE BOOKED IN THE FORM INSIDE MODAL.
+function _populateHours() {
   //populate hours to book as a inputs radio
   let formCheck = document.getElementById("form-check-hours");
   formCheck.innerHTML = ""; //Clear element to build everything new
@@ -241,7 +240,7 @@ function populateHours() {
   let iFTextNode = document.createTextNode("Please, chose a time.");
   divInvalidFeedback.appendChild(iFTextNode);
   formCheck.appendChild(divInvalidFeedback);
-}
+}*/
 
 /*
  * ADMIN AREA PAGE <--------------------------------------------------------

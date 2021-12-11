@@ -13,9 +13,9 @@
       novalidate
     >
       <h5>
-        <small>Schedule set to</small><%= typeof event === 'undefined' ? '' :
-        event.schedule %><small>hs on</small> <%= typeof event ===
-        'undefined' ? '' : (event.date).toUTCString().slice(0,16) %>.
+        <small>Schedule set to </small><%= typeof event === 'undefined' ? '' :
+        event.schedule %><small>hs on</small> <%= typeof event === 'undefined' ?
+        '' : (event.date).toUTCString().slice(0,16) %>.
       </h5>
       <h6>Please, make your changes.</h6>
       <div class="col-md-6">

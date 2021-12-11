@@ -14,12 +14,19 @@
       name="create"
       id="create"
     >
-      <div class="col-12">        
-    
+      <div class="col-12">
+        <% if(option == 2){ %>
+        <h6>Chose a time:</h6>
+        <hr />
+        <% } %>
         <input type="hidden" id="date" name="date" value="<%= date %>" />
         <input type="hidden" id="index" name="index" value="<%= index %>" />
-        <input type="hidden" id="schedule" name="schedule" value="" />          
-        
+        <% if(option != 2){ %>
+        <input type="hidden" id="schedule" name="schedule" value="" />
+        <% } %> <% if(option == 2){ %>
+        <div class="form-check ps-0" id="form-check-hours"></div>
+        <hr />
+        <% } %>
       </div>
       <h6>Provide your information:</h6>
       <div class="col-md-6">
@@ -106,9 +113,7 @@
         >
           Book now
         </button>
-        <a
-          href="/events?date=<%= date %>"
-          class="btn btn-outline-primary col-sm-2 ms-1"
+        <a href="/book-online" class="btn btn-outline-primary col-sm-2 ms-1"
           >Cancel</a
         >
       </div>
@@ -116,25 +121,32 @@
     <%- include('../layouts/event-body-footer'); %>
     <!-- Footer -->
     <%- include ../layouts/footer %>
-    <script>    
-      const index = (<%- JSON.stringify(index) %>);
-      populateSchedule(index);          
-         
+    <script>
+      const option = Number("<%= option %>");
+      if(option != 2){
+        const index = (<%- JSON.stringify(index) %>);
+        populateSchedule(index);
+      }else{
+        populateRadioHours();
+        disableRadio(<%- JSON.stringify(events) %>);
+      }
+
+
       //OnChange and validated, validate form enable submit button on form
-      var form = document.querySelector('form');
-      form.addEventListener('change', function() {
-            var curEl = document.querySelectorAll('.invalid-feedback');
-           // convert it to array:
-          //var myArray = [];for(var i = nl.length; i--; myArray.unshift(nl[i]));
-          // now find the visible (= with offsetWidth more than 0) item:
-          for (i =0; i < curEl.length; i++){
-           // var curEl = myArray[i];
-            if ((curEl[i].clientHeight || curEl[i].innerHeight) ){
-              document.getElementById("submitBtn").disabled = true;             
-            }else{
-              document.getElementById("submitBtn").disabled = false;             
-            }
+      var form = document.querySelector("form");
+      form.addEventListener("change", function () {
+        var curEl = document.querySelectorAll(".invalid-feedback");
+        // convert it to array:
+        //var myArray = [];for(var i = nl.length; i--; myArray.unshift(nl[i]));
+        // now find the visible (= with offsetWidth more than 0) item:
+        for (i = 0; i < curEl.length; i++) {
+          // var curEl = myArray[i];
+          if (curEl[i].clientHeight || curEl[i].innerHeight) {
+            document.getElementById("submitBtn").disabled = true;
+          } else {
+            document.getElementById("submitBtn").disabled = false;
           }
+        }
       });
     </script>
   </body>
