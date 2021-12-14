@@ -56,5 +56,7 @@ router.post(
   usersController.authorization,
   usersController.changePass
 );
+router.get("/users/admin-options", usersController.adminOptions);
+
 
 module.exports = router;

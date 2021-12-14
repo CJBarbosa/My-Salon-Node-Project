@@ -42,11 +42,13 @@ exports.signup = async (req, res) => {
 
 // user login function**
 const verifyUserLogin = async (email, password) => {
+  
   try {
     const user = await User.findOne({ email }).lean();
     if (!user) {
       return { status: "error", error: "user not found" };
     }
+    
     if (await bcrypt.compare(password, user.password)) {
       // creating a JWT token
       token = jwt.sign(
@@ -156,4 +158,9 @@ exports.changePass = async (req, res, next) => {
     }
     res.render("users/admin-area", { title: "Password Reset Successfully" });
   });
+};
+
+// GET /users/change-pass
+exports.adminOptions = (req, res) => {
+  res.render("users/admin-options");
 };
