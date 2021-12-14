@@ -61,18 +61,15 @@
             you.
           </p>
           <form
-            class="
-              needs-validation
-              was-validated
-              p-3
-              custonbgy
-              -bg-light
-              shadow
-            "
+            class="needs-validation p-3 custonbgy -bg-light shadow"
             novalidate
             action="/contact-us"
             method="post"
           >
+          <p class="text-muted" id="errormsg"<% if(typeof title !== 'undefined') { %>
+            style="color: red!important; <% } %>"> 
+            <%= typeof title === 'undefined' ? "" :  title %>           
+          </p>
             <div class="mb-3">
               <label for="namevalidation" class="form-label">Name:</label>
               <input
@@ -155,7 +152,6 @@
               id="submit"
               type="submit"
               class="btn btn-outline-dark -custonbgb"
-              disabled
             >
               Submit
             </button>

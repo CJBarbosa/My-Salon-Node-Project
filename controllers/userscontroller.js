@@ -17,8 +17,13 @@ exports.validateForm = [
   body("password").trim().not().isEmpty().withMessage("Title is required."),
 ];
 
+// GET /users/change-pass
+exports.createAdminView = (req, res) => {
+  res.render("users/create-admin");
+};
+
 // POST /user/signup
-exports.signup = async (req, res) => {
+exports.createAdmin = async (req, res) => {
   // geting our data from frontend
   const { email, password: plainTextPassword } = req.body;
   // encrypting our password to store in database
@@ -29,12 +34,17 @@ exports.signup = async (req, res) => {
       email,
       password,
     });
-    return res.redirect("admin-area");
+    return res.render("users/admin-area", {
+      title: "Admin created Successfully",
+    });
   } catch (error) {
     console.log(JSON.stringify(error));
     if (error.code === 11000) {
       //return res.send({ status: "error", error: "email already exists" });
-      return res.status(409).send("User Already Exist. Please Login");
+      return res.render("users/admin-area", {
+        title: "User Already Exist. Please Login",
+      });
+      //res.status(409).send("User Already Exist. Please Login");
     }
     throw error;
   }
@@ -42,13 +52,12 @@ exports.signup = async (req, res) => {
 
 // user login function**
 const verifyUserLogin = async (email, password) => {
-  
   try {
     const user = await User.findOne({ email }).lean();
     if (!user) {
       return { status: "error", error: "user not found" };
     }
-    
+
     if (await bcrypt.compare(password, user.password)) {
       // creating a JWT token
       token = jwt.sign(
@@ -161,6 +170,30 @@ exports.changePass = async (req, res, next) => {
 };
 
 // GET /users/change-pass
-exports.adminOptions = (req, res) => {
-  res.render("users/admin-options");
+exports.deleteAdminView = (req, res) => {
+  res.render("users/delete-admin");
+};
+
+// POST events/:id/delete
+exports.deleteAdmin = (req, res, next) => {
+  User.findOneAndDelete({ email: req.body.email }, (err, docs) => {
+    if (err || !docs) {
+      res.render("users/delete-admin", {
+        title: "Admin not found!",
+      });
+      //next(err);
+    } else {
+      res.render("users/admin-area", { title: "Admin Deleted Successfully" });
+    }
+  });
+};
+
+// GET /users/change-pass
+exports.forgotPassView = (req, res) => {
+  res.render("users/forgot-pass");
+};
+
+// Post /users/change-pass
+exports.forgotPass = (req, res) => {
+  res.render("users/forgot-pass");
 };

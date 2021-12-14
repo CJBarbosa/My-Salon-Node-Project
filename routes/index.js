@@ -10,7 +10,9 @@ router.get("/", pagesController.home);
 router.get("/the-stylist", pagesController.theStylist);
 router.get("/services", pagesController.services);
 //router.get("/book-online", pagesController.bookOnline);
-router.get("/contact-us", pagesController.contactUS);
+router.get("/contact-us", pagesController.contactUSView);
+router.post("/contact-us", pagesController.contactUS);
+
 //router.get("/my-admin-area-login", pagesController.login);
 //router.get("/admin-area", pagesController.adminArea);
 
@@ -44,19 +46,39 @@ router.get("/events/:id/delete", eventsController.deleteView);
 router.post("/events/:id/delete", eventsController.delete);
 
 //Users routers
-router.post("/users/signup", usersController.signup);
-router.post("/users/login", usersController.login);
-router.get("/users/logout", usersController.logout);
+//router.post("/users/signup", usersController.signup);
 router.get("/admin-area", usersController.adminArea);
 router.get("/users/login", usersController.loginView);
-router.get("/users/signup", usersController.signupView);
-router.get("/users/change-pass", usersController.changePassView);
-router.post(
+router.post("/users/login", usersController.login);
+router.get(
+  "/users/logout",
+  usersController.authorization,
+  usersController.logout
+);
+//router.get("/users/signup", usersController.signupView);
+router.get(
   "/users/change-pass",
   usersController.authorization,
-  usersController.changePass
+  usersController.changePassView
 );
-router.get("/users/admin-options", usersController.adminOptions);
-
+router.post("/users/change-pass", usersController.changePass);
+router.get(
+  "/users/create-admin",
+  usersController.authorization,
+  usersController.createAdminView
+);
+router.post(
+  "/users/create-admin",
+  usersController.validateForm,
+  usersController.createAdmin
+);
+router.get(
+  "/users/delete-admin",
+  usersController.authorization,
+  usersController.deleteAdminView
+);
+router.post("/users/delete-admin", usersController.deleteAdmin);
+router.get("/users/forgot-pass", usersController.forgotPassView);
+router.post("/users/forgot-pass", usersController.forgotPass);
 
 module.exports = router;

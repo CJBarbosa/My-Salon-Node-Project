@@ -8,9 +8,41 @@
       <!-- Main -->
       <div class="row mb-5">
         <div class="col d-flex justify-content-between text-center card-header">
-          <a href="/users/change-pass" class="btn btn-outline-primary col-sm-3"
+          <div class="btn-group col-sm-3" role="group">
+            <button
+              id="btnGroupDrop1"
+              type="button"
+              class="btn btn-outline-primary dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Admin Options
+            </button>
+            <ul
+              class="dropdown-menu w-100 text-center"
+              aria-labelledby="btnGroupDrop1"
+            >
+              <li>
+                <a class="dropdown-item" href="/users/create-admin"
+                  >Create a new Admin</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="/users/change-pass"
+                  >Change your Password</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="/users/delete-admin"
+                  >Delete an Admin</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!--a href="/users/change-pass" class="btn btn-outline-primary col-sm-3"
             >Admin Options</a
-          >
+          -->
           <h2 class="col-sm-6 mb-0">Admin Area</h2>
           <a href="/users/logout" class="btn btn-outline-primary col-sm-3"
             >Back to website/Logoff</a

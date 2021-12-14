@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <div class="container-xl d-flex h-100">
+      <div class="row justify-content-center align-self-center w-100">
+        <div class="col-4 text-center min-w-250">
+          <!-- Header -->
+          <form
+            class="custonbgy shadow p-3"
+            action="/users/delete-admin"
+            method="post"
+          >
+            <a class="text-decoration-none" href="#"
+              ><h2 class="logo">My Salon</h2></a
+            >
+            <hr />
+            <h5 class="mb-3 fw-normal">Provide Admin information:</h5>
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="name@email.com"
+                name="email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                required
+              />
+              <label for="floatingPassword">Email Address</label>
+            </div>
+
+            <input
+              type="submit"
+              class="btn btn-primary mb-1"
+              value="Delete Admin"
+              name="changepsw"
+              id="cp"
+            />
+            <a href="/admin-area" class="btn btn-primary mb-1">Cancel</a>
+
+            <div class="card-body" id="confirmMessage"<% if(typeof title !== 'undefined') { %>
+              style="color: red!important; <% } %>"> 
+              <%= typeof title === 'undefined' ? "" :  title %>&nbsp;</div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+  </body>
+</html>
