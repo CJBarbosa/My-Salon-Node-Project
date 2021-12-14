@@ -27,3 +27,22 @@ module.exports = function (options) {
     if (error) {
       return console.log(error);
 };
+
+
+JWT_SECRET=hakshuiegagajggajhdavgajdadhakahuadywyvvmzvnvqyiyqyio$%^$$!#
+
+_id
+:
+61b6770c45be443ef81171db
+email
+:
+"jhondoe@email.com"
+password
+:
+"$2a$10$Cc99HgwLDR3BLrwY/2BZK.M2ILI9W8FpVpOenufVrsjmGypXvvZsO"
+__v
+:
+0
+updatedAt
+:
+2021-12-13T18:45:30.373+00:00
