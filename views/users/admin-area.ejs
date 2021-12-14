@@ -8,17 +8,25 @@
       <!-- Main -->
       <div class="row mb-5">
         <div class="col d-flex justify-content-between text-center card-header">
-          <a
-            href="change-password.html"
-            class="btn btn-outline-primary col-sm-3"
+          <a href="/users/change-pass" class="btn btn-outline-primary col-sm-3"
             >Change Password</a
           >
           <h2 class="col-sm-6 mb-0">Admin Area</h2>
-          <a href="/" class="btn btn-outline-primary col-sm-3"
+          <a href="/users/logout" class="btn btn-outline-primary col-sm-3"
             >Back to website/Logoff</a
           >
         </div>
+        <div
+          id="mydiv"
+          class="text-center"
+          style="position: absolute; top: 70px; left: 0px"
+        >
+          <h6 style="color: red">
+            <%= typeof title === 'undefined' ? "" : title %>
+          </h6>
+        </div>
       </div>
+
       <div class="row mb-5">
         <div class="col">
           <div class="card">
@@ -45,5 +53,11 @@
     <!-- Footer -->
     <%- include('../layouts/footer'); %>
     <script src="/javascripts/calendar.js"></script>
+    <script type="text/javascript">
+      var msg = "<%= typeof title === 'undefined' ? '' : title  %>";
+      if (msg) {
+        $("#mydiv").delay(3000).fadeOut(500);
+      }
+    </script>
   </body>
 </html>

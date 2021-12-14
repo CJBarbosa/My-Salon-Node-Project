@@ -10,14 +10,6 @@ exports.validateForm = [
   body("phone").trim().not().isEmpty().withMessage("Title is required."),
 ];
 
-// GET /books/books
-exports.books = (req, res) => {
-  res.render("books/books", {
-    title: "Create an Appointment",
-    option: req.query.option,
-  });
-};
-
 // GET /books
 exports.list = (req, res, next) => {
   Event.find({

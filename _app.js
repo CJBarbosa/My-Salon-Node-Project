@@ -1,7 +1,6 @@
+const bodyparser = require("body-parser");
 const createError = require("http-errors");
 const express = require("express");
-const bodyparser = require("body-parser");
-
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
@@ -11,7 +10,7 @@ require("dotenv").config();
 const router = require("./routes/index");
 
 const app = express();
-
+// get our urls and secrets
 // Connect to the MongoDB database
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -31,9 +30,9 @@ app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 

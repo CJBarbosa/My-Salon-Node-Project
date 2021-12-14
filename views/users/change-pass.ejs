@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <div class="container-xl d-flex h-100">
+      <div class="row justify-content-center align-self-center w-100">
+        <div class="col-4 text-center min-w-250">
+          <!-- Header -->
+          <form
+            class="custonbgy shadow p-3"
+            action="/users/change-pass"
+            method="post"
+          >
+            <a class="text-decoration-none" href="#"
+              ><h2 class="logo">My Salon</h2></a
+            >
+            <hr />
+            <h5 class="mb-3 fw-normal">Enter your password twice:</h5>
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                class="form-control"
+                id="pass1"
+                placeholder="Password"
+                name="newPass"
+                minlength="6"
+                required
+              />
+              <label for="floatingPassword">New Password</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                class="form-control"
+                id="pass2"
+                placeholder="Password"
+                minlength="6"
+                required
+                onkeyup="checkPass(); return false;"
+                placeholder="Confirm Password"
+                name="newPassConfirm"
+              />
+              <label for="floatingPassword">Confirm Password</label>
+            </div>
+
+            <input
+              type="submit"
+              class="btn btn-primary mb-1"
+              value="Change Password"
+              name="changepsw"
+              id="cp"
+            />
+            <a href="/admin-area" class="btn btn-primary mb-1">Cancel</a>
+
+            <div class="card-body" id="confirmMessage">&nbsp;</div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+  </body>
+</html>

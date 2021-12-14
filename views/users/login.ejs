@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <%- include('../layouts/head'); %>
+  </head>
+  <body class="d-flex flex-column h-100" id="the-stylist">
+    <div class="container-xl d-flex h-100">
+      <div class="row justify-content-center align-self-center w-100">
+        <div class="col-4 text-center min-w-250">
+          <!-- Header -->
+          <form
+            class="custonbgy shadow p-3"
+            action="/users/login"
+            method="post"
+          >
+            <a class="text-decoration-none" href="#"
+              ><h2 class="logo">My Salon</h2></a
+            >
+            <hr />
+            <h5 class="mb-3 fw-normal">Please sign in</h5>
+
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                id="floatingInput"
+                placeholder="name@example.com"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                required
+              />
+              <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                id="floatingPassword"
+                placeholder="Password"
+                required
+                minlength="6"
+              />
+              <label for="floatingPassword">Password</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">
+              Sign in
+            </button>
+            <div class="m-3">
+              <a
+                class=""
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                ><small>Forget Your Password?</small></a
+              >
+            </div>
+            <p class="text-muted" id="errormsg"<% if(typeof title !== 'undefined') { %>
+              style="color: red!important; <% } %>"> 
+              <%= typeof title === 'undefined' ? "©2021" :  title %>
+              
+              
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <%- include ../layouts/footer %>
+  </body>
+</html>
