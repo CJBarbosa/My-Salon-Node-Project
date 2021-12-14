@@ -46,3 +46,18 @@ __v
 updatedAt
 :
 2021-12-13T18:45:30.373+00:00
+
+
+users.json
+
+[{
+    "_id": {
+      "$oid": "61b6770c45be443ef81171db"
+    },
+    "email": "jhondoe@email.com",
+    "password": "$2a$10$QHCs1K3t5X9p78aNipyODebBm8qTI9XYT5iqNxs6yJRIxKD/m4YqS",
+    "__v": 0,
+    "updatedAt": {
+      "$date": "2021-12-13T21:06:22.307Z"
+    }
+  }]
