@@ -63,8 +63,8 @@ async function mainMail(link, email, date, schedule) {
     host: "smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: "969396363e67ba",
-      pass: "f3de49be60089c",
+      user: process.env.USER_EMAIL,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
@@ -125,7 +125,7 @@ exports.details = (req, res, next) => {
   });
 };
 
-// POST events/:id/delete
+// POST books/:id/delete
 exports.cancelAppointment = (req, res, next) => {
   Event.findByIdAndRemove(req.params.id, (err) => {
     if (err) {

@@ -60,11 +60,7 @@
     <%- include('../layouts/event-body-footer'); %>
     <!-- Footer -->
     <%- include ../layouts/footer %>
-    <script>
-      // stringify the data passed from router to ejs (within the EJS template only)
-      //var data = ;
-      //Passing it to js
-      //test(data);
+    <script>      
       //Get date from Calendar and transfer it to Card header title
       getClickedDate(<%- JSON.stringify(date) %>);
     </script>

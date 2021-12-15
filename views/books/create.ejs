@@ -137,10 +137,8 @@
       form.addEventListener("change", function () {
         var curEl = document.querySelectorAll(".invalid-feedback");
         // convert it to array:
-        //var myArray = [];for(var i = nl.length; i--; myArray.unshift(nl[i]));
         // now find the visible (= with offsetWidth more than 0) item:
         for (i = 0; i < curEl.length; i++) {
-          // var curEl = myArray[i];
           if (curEl[i].clientHeight || curEl[i].innerHeight) {
             document.getElementById("submitBtn").disabled = true;
           } else {

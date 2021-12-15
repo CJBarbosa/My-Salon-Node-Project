@@ -1,15 +1,11 @@
 const nodemailer = require("nodemailer");
-
-//const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 var cookieParser = require("cookie-parser");
-
 const { body, validationResult } = require("express-validator");
-//const createError = require("http-errors");
 const User = require("../models/user");
-
 const bcrypt = require("bcryptjs");
 const salt = 10;
+
 // GET Secret from .envs
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -75,23 +71,24 @@ const verifyUserLogin = async (email, password) => {
   }
 };
 
-//POST login
+//POST /users login
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  // we made a function to verify our user login
+  //Function to verify our user login
   const response = await verifyUserLogin(email, password);
   if (response.status === "ok") {
-    // storing our JWT web token as a cookie in our browser
+    // storing JWT web token as a cookie in browser
     res.cookie("token", token, {
       maxAge: 15 * 60 * 1000, //15 minuts
       httpOnly: true,
-    }); // maxAge: 5 minuts
+    }); // maxAge: 15 minuts
     res.redirect("/admin-area");
   } else {
     res.render("users/login", { title: JSON.stringify(response.error) });
   }
 };
 
+//MIDDLEWARE /users
 exports.authorization = function (req, res, next) {
   const token = req.cookies.token;
   if (!token) {
@@ -109,13 +106,13 @@ exports.authorization = function (req, res, next) {
   }
 };
 
-//**
+//GET /users logout
 exports.logout = (req, res) => {
   return res.clearCookie("token").status(200).redirect("/");
   /*.json({ message: "Successfully logged out" });*/
 };
 
-//**
+ 
 const verifyToken = (token) => {
   try {
     const verify = jwt.verify(token, JWT_SECRET);
@@ -130,7 +127,7 @@ const verifyToken = (token) => {
   }
 };
 
-// get requests **
+//GET /users admin area
 exports.adminArea = (req, res) => {
   const { token } = req.cookies;
   if (verifyToken(token)) {
@@ -140,11 +137,12 @@ exports.adminArea = (req, res) => {
   }
 };
 
-// GET /books/books
+// GET /users login
 exports.loginView = (req, res) => {
   res.render("users/login");
 };
 
+//Get /users signup
 exports.signupView = (req, res) => {
   res.render("signup");
 };
@@ -156,13 +154,10 @@ exports.changePassView = (req, res) => {
 
 // POST /users/reset-password
 exports.changePass = async (req, res, next) => {
-  // encrypting password to store in database
-  console.log("new pass - ", req.body.newPass);
+  // encrypting password to store in database 
   const newpassword = await bcrypt.hash(req.body.newPass, salt);
   // Specify the fields that can be updated.
-  const user = { password: newpassword };
-  console.log("value of user - ", user);
-  console.log("value of userId - ", req.userId);
+  const user = { password: newpassword };  
 
   User.findByIdAndUpdate(req.userId, user, { new: true }, (err) => {
     if (err) {
@@ -177,7 +172,7 @@ exports.deleteAdminView = (req, res) => {
   res.render("users/delete-admin");
 };
 
-// POST events/:id/delete
+// POST users/:id/delete
 exports.deleteAdmin = (req, res, next) => {
   User.findOneAndDelete({ email: req.body.email }, (err, docs) => {
     if (err || !docs) {
@@ -202,8 +197,8 @@ async function mainMail(email, link) {
     host: "smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
+      user: process.env.USER_EMAIL,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
@@ -221,7 +216,7 @@ async function mainMail(email, link) {
   return;
 }
 
-// POST events/:id/delete
+// POST /users/:id/delete
 exports.forgotPass = (req, res, next) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (err || !user) {
@@ -253,19 +248,15 @@ exports.forgotPass = (req, res, next) => {
 
 //GET /reset-password-by-email
 exports.resetPassByEmail = (req, res, next) => {
-  console.log("entrou no resetPassByEmail");
   const { id, token } = req.params;
-  console.log("id: ", id);
-  console.log("token : ", token);
   try {
     //verify if token is value and if it is not expired
     const data = jwt.verify(token, JWT_SECRET);
-    console.log("data verify: ", data);
     // storing JWT web token as a cookie in the browser
     res.cookie("token", token, {
       maxAge: 15 * 60 * 1000, //15 minuts
       httpOnly: true,
-    }); // maxAge: 5 minuts
+    }); // maxAge: 15 minuts
     //Redirect Admin to Change-pass page.
     return res.render("users/change-pass", {
       title: "Enter with new Password",
@@ -274,6 +265,5 @@ exports.resetPassByEmail = (req, res, next) => {
     return res.render("users/login", {
       title: "Token expired or not value",
     });
-    //return res.sendStatus(403);
   }
 };

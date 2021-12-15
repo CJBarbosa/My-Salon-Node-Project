@@ -15,6 +15,16 @@ This project is using the following technologies:
 Must have Node.js installed;
 Download the project and open it's folder;
 Run command: npm install
+*****************************
+Add the .env file with itens:
+
+MONGODB_URI=mongodb://localhost:27017/my_salon_db
+SERVER_PORT=3002
+JWT_SECRET=hakshuiegagajggajhdavgajdadhakahuadywyvvmzvnvqyiyqyio$%^$$!#
+USER_EMAIL=969396363e67ba
+EMAIL_PASS=f3de49be60089c
+
+*****************************
 To run the app in your development environment with debug mode:  
 DEBUG=my-salon-node:\* npm start
 Or without Debug mode:

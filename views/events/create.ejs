@@ -117,13 +117,7 @@
     <%- include('../layouts/event-body-footer'); %>
     <!-- Footer -->
     <%- include ../layouts/footer %>
-    <script>
-                                         // stringify the data passed from router to ejs (within the EJS template only)
-                                         //var data = ;
-                                         //Passing it to js
-                                         //test(data);
-                                         //Get date from Calendar and transfer it to Card header title
-                                         //getClickedDate(<%- JSON.stringify(events) %>);
+    <script>                                         
       populateRadioHours();
       disableRadio(<%- JSON.stringify(events) %>);
       //OnChange and validated, validate form enable submit button on form
@@ -132,11 +126,8 @@
 
 
             var curEl = document.querySelectorAll('.invalid-feedback');
-           // convert it to array:
-          //var myArray = [];for(var i = nl.length; i--; myArray.unshift(nl[i]));
-          // now find the visible (= with offsetWidth more than 0) item:
+           
           for (i =0; i < curEl.length; i++){
-           // var curEl = myArray[i];
             if ((curEl[i].clientHeight || curEl[i].innerHeight) ){
               document.getElementById("submitBtn").disabled = true;
               console.log("return if")
