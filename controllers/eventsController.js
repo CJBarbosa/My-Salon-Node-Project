@@ -12,11 +12,6 @@ exports.validateForm = [
 
 // GET /events
 exports.list = (req, res, next) => {
-  /* Search from-to dates
-  let startingDate = "2021-12-01";
-  let endDate = "2021-12-03";
-  Event.find({ date: { $gte: startingDate, $lte: endDate } })*/
-  //const the_date = ;
   Event.find({ date: req.query.date })
     .sort({ index: 1 })
     .limit(16)

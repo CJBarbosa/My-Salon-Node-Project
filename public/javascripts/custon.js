@@ -102,8 +102,6 @@ if (document.getElementById("book-online")) {
           "id",
           `${new Date(fullDate).toLocaleDateString("en-CA")}_${index}`
         );
-        //aElement.setAttribute("data-bs-target", "#fullScreenWeekModal");
-        //aElement.setAttribute("onclick", "transferTitle($(this))");
         if (hour % 1 === 0) {
           //Verify if it is interger to print hours properly
           let textNode = document.createTextNode(`${hour}:00 - ${hour}:30`);
@@ -129,18 +127,6 @@ if (document.getElementById("book-online")) {
     TodayDate < 6 ? TodayDate++ : (TodayDate = 0);
   }
 
-  /*/(OPTION 1) GET DATE TITLE FROM OPTION 1 AND ADD IT TO MODAL TITLE
-  function transferTitle(elmnt) {
-    let bookHour = elmnt.text(); //Get hour selected by user
-    //To get the day title -> go up 2 levels in the tree and get first child text.
-    let secondParent = elmnt.parentsUntil("col-12", ".card");
-    let bookDate = secondParent.children(".card-header").text();
-    //transfer the date and hour text to the modal title.
-    document.getElementById(
-      "modal-card-header"
-    ).innerText = `${bookDate} - ${bookHour}`;
-  }*/
-
   //(OPTION 1) CHECK FOR BOOKED EVENTS AND MARK THEM AS NOT AVAILABLE TO BOOK BY DISABLE THE ANCHOR LINK
   function disableLink(events) {
     const arrayBookLink = document.getElementsByClassName("book-link");
@@ -162,9 +148,7 @@ if (document.getElementById("book-online")) {
       disableday: [7], // DISABLE SUN (DEFAULT NONE)
       yrange: 2, // ALLOW +/- 2 YEARS FROM NOW (DEFAULT 10)
       onpick: () => {
-        markClickDate(event), //
-          // getClickedDate(" "),
-          //populateHours(),
+        markClickDate(event),
           (window.location.href = `/books/create/${
             document.getElementById("input-pop").value
           }/16?option=2`);
@@ -181,12 +165,6 @@ function markClickDate(e) {
 // (OPTION 2) GET DATE FROM DATE PICKER, TRANSFER IT TO MODAL TITLE
 //function getClickedDate(anyString) {
 function getClickedDate(inputValue) {
-  /*let inputValue = anyString; //If call came from (ADMIN AREA)
-  //get date as number and convert it to string
-  if (document.getElementById("input-pop")) {
-    //If call came from (BOOK ONLINE - OPTION 2)
-    inputValue = document.getElementById("input-pop").value;
-  }*/
   let inputValueArray = inputValue.split("-");
   let theYear = Number(inputValueArray[0]);
   let theMonth = Number(inputValueArray[1]) - 1;
@@ -203,44 +181,7 @@ function getClickedDate(inputValue) {
     "en-US",
     options
   );
-  //populateHours();
 }
-
-/*/(OPTION 2) POPULATE HOURS TO BE BOOKED IN THE FORM INSIDE MODAL.
-function _populateHours() {
-  //populate hours to book as a inputs radio
-  let formCheck = document.getElementById("form-check-hours");
-  formCheck.innerHTML = ""; //Clear element to build everything new
-  let hours = "";
-  //Business open 9 to 17, create book option in every half hour
-  for (let hour = 9; hour < 17; hour += 0.5) {
-    hours =
-      hour % 1 === 0
-        ? `${hour}:00 - ${hour}:30`
-        : `${Math.trunc(hour)}:30 - ${hour + 0.5}:00`;
-    let inputRadio = document.createElement("input");
-    inputRadio.setAttribute("type", "radio");
-    inputRadio.classList.add("btn-check");
-    inputRadio.setAttribute("name", "hours");
-    inputRadio.setAttribute("id", hours.replace(/\s/g, ""));
-    inputRadio.setAttribute("autocomplete", "off");
-    inputRadio.required = true;
-    formCheck.appendChild(inputRadio);
-    let labelRadio = document.createElement("label");
-    labelRadio.classList.add("btn", "btn-outline-secondary");
-    labelRadio.setAttribute("for", hours.replace(/\s/g, ""));
-    let labelRadioTextNode = document.createTextNode(hours);
-    labelRadio.appendChild(labelRadioTextNode);
-    formCheck.appendChild(labelRadio);
-    hours = "";
-  }
-  //Create invalid message feedback to show when needed
-  let divInvalidFeedback = document.createElement("div");
-  divInvalidFeedback.classList.add("invalid-feedback");
-  let iFTextNode = document.createTextNode("Please, chose a time.");
-  divInvalidFeedback.appendChild(iFTextNode);
-  formCheck.appendChild(divInvalidFeedback);
-}*/
 
 /*
  * ADMIN AREA PAGE <--------------------------------------------------------

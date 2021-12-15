@@ -130,10 +130,6 @@ var picker = {
     let today = new Date(),
       todayDate = null;
 
-    /* UTC+0 STANDARD
-    if (today.getUTCMonth() + 1 == month && today.getUTCFullYear() == year) {
-      todayDate = today.getUTCDate();
-    } */
     //UTC-6 LOCAL HOUR
     if (today.getMonth() + 1 == month && today.getFullYear() == year) {
       todayDate = today.getDate();

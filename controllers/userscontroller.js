@@ -1,3 +1,5 @@
+const nodemailer = require("nodemailer");
+
 //const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 var cookieParser = require("cookie-parser");
@@ -61,7 +63,7 @@ const verifyUserLogin = async (email, password) => {
     if (await bcrypt.compare(password, user.password)) {
       // creating a JWT token
       token = jwt.sign(
-        { id: user._id, username: user.email, type: "user" },
+        { id: user._id, email: user.email, type: "user" },
         JWT_SECRET
       );
       return { status: "ok", data: token };
@@ -86,9 +88,6 @@ exports.login = async (req, res) => {
     }); // maxAge: 5 minuts
     res.redirect("/admin-area");
   } else {
-    /*res.redirect(`/users/login?info=${json(response)}`);*/
-    //console.log(JSON.stringify(error));
-
     res.render("users/login", { title: JSON.stringify(response.error) });
   }
 };
@@ -102,7 +101,7 @@ exports.authorization = function (req, res, next) {
     const data = jwt.verify(token, JWT_SECRET);
     req.userId = data.id;
     console.log("userId", req.userId);
-    req.userEmail = data.username;
+    req.userEmail = data.email;
     console.log("userEmail", req.userEmail);
     next();
   } catch {
@@ -157,10 +156,14 @@ exports.changePassView = (req, res) => {
 
 // POST /users/reset-password
 exports.changePass = async (req, res, next) => {
-  // encrypting our password to store in database
+  // encrypting password to store in database
+  console.log("new pass - ", req.body.newPass);
   const newpassword = await bcrypt.hash(req.body.newPass, salt);
   // Specify the fields that can be updated.
   const user = { password: newpassword };
+  console.log("value of user - ", user);
+  console.log("value of userId - ", req.userId);
+
   User.findByIdAndUpdate(req.userId, user, { new: true }, (err) => {
     if (err) {
       return next(err);
@@ -188,12 +191,89 @@ exports.deleteAdmin = (req, res, next) => {
   });
 };
 
-// GET /users/change-pass
+// GET /users/forgot-pass
 exports.forgotPassView = (req, res) => {
   res.render("users/forgot-pass");
 };
 
-// Post /users/change-pass
-exports.forgotPass = (req, res) => {
-  res.render("users/forgot-pass");
+//Function used on Forget Password Router
+async function mainMail(email, link) {
+  var transporter = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  const mailOption = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "My Salon - Forgot Password Procedures",
+    html: `<p>In order to recover access to Admin Area, Please click on the link provided:</p> 
+    <p>Link : <a href="${link}">${link}</a></p>
+    <p>Please, note: This link will expire 15 minutes after your request.</p>
+    <p><small>This is an automatic message, please do not replay.</small></p>`,
+  };
+
+  await transporter.sendMail(mailOption);
+  return;
+}
+
+// POST events/:id/delete
+exports.forgotPass = (req, res, next) => {
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (err || !user) {
+      res.render("users/forgot-pass", {
+        title: "Admin not found!",
+      });
+      //next(err);
+    } else {
+      //Create Token with 15m expiration
+      token = jwt.sign(
+        { id: user._id, email: user.email, type: "user", expiresIn: "15m" },
+        JWT_SECRET
+      );
+      const link = `http://localhost:${process.env.SERVER_PORT}/reset-password-by-email/${user.id}/${token}`;
+      // Sent the link to the users email -----------------------------------------
+
+      mainMail(user.email, link);
+      if (err) {
+        return res.render("users/forgot-pass", {
+          title: "Message Could not be Sent",
+        });
+      }
+      res.render("users/login", {
+        title: "Success! Check your e-mail!",
+      });
+    }
+  });
+};
+
+//GET /reset-password-by-email
+exports.resetPassByEmail = (req, res, next) => {
+  console.log("entrou no resetPassByEmail");
+  const { id, token } = req.params;
+  console.log("id: ", id);
+  console.log("token : ", token);
+  try {
+    //verify if token is value and if it is not expired
+    const data = jwt.verify(token, JWT_SECRET);
+    console.log("data verify: ", data);
+    // storing JWT web token as a cookie in the browser
+    res.cookie("token", token, {
+      maxAge: 15 * 60 * 1000, //15 minuts
+      httpOnly: true,
+    }); // maxAge: 5 minuts
+    //Redirect Admin to Change-pass page.
+    return res.render("users/change-pass", {
+      title: "Enter with new Password",
+    });
+  } catch {
+    return res.render("users/login", {
+      title: "Token expired or not value",
+    });
+    //return res.sendStatus(403);
+  }
 };

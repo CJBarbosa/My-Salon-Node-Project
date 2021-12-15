@@ -20,19 +20,15 @@ exports.contactUSView = (req, res) => {
 };
 
 async function mainMail(name, email, subject, message) {
-  let transporter = nodemailer.createTransport({
-    service: "Outlook365",
-    host: "smtp.office365.com",
-    port: "587",
-    tls: {
-      ciphers: "SSLv3",
-      rejectUnauthorized: false,
-    },
+  var transporter = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD,
     },
   });
+
   const mailOption = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
@@ -56,9 +52,7 @@ exports.contactUS = async (req, res, next) => {
   try {
     await mainMail(name, email, subject, message);
     res.render("pages/contact-us", { title: "Message Sent Successfully!" });
-    //res.send("Message Successfully Sent!");
   } catch (error) {
     res.render("pages/contact-us", { title: "Message Could not be Sent" });
-    //res.send("Message Could not be Sent");
   }
 };

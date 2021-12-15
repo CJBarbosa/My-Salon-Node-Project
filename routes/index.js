@@ -9,12 +9,8 @@ const usersController = require("../controllers/usersController");
 router.get("/", pagesController.home);
 router.get("/the-stylist", pagesController.theStylist);
 router.get("/services", pagesController.services);
-//router.get("/book-online", pagesController.bookOnline);
 router.get("/contact-us", pagesController.contactUSView);
 router.post("/contact-us", pagesController.contactUS);
-
-//router.get("/my-admin-area-login", pagesController.login);
-//router.get("/admin-area", pagesController.adminArea);
 
 //Book routers
 router.get("/book-online", booksController.list);
@@ -26,6 +22,7 @@ router.post(
 );
 //router.get("/books/books", booksController.books);
 router.get("/books/:id", booksController.details);
+router.get("/cancel-appointment/:id", booksController.cancelAppointment);
 
 // Events routes
 router.get("/events", eventsController.list);
@@ -46,7 +43,6 @@ router.get("/events/:id/delete", eventsController.deleteView);
 router.post("/events/:id/delete", eventsController.delete);
 
 //Users routers
-//router.post("/users/signup", usersController.signup);
 router.get("/admin-area", usersController.adminArea);
 router.get("/users/login", usersController.loginView);
 router.post("/users/login", usersController.login);
@@ -55,13 +51,16 @@ router.get(
   usersController.authorization,
   usersController.logout
 );
-//router.get("/users/signup", usersController.signupView);
 router.get(
   "/users/change-pass",
   usersController.authorization,
   usersController.changePassView
 );
-router.post("/users/change-pass", usersController.changePass);
+router.post(
+  "/users/change-pass",
+  usersController.authorization,
+  usersController.changePass
+);
 router.get(
   "/users/create-admin",
   usersController.authorization,
@@ -80,5 +79,10 @@ router.get(
 router.post("/users/delete-admin", usersController.deleteAdmin);
 router.get("/users/forgot-pass", usersController.forgotPassView);
 router.post("/users/forgot-pass", usersController.forgotPass);
+router.get(
+  "/reset-password-by-email/:id/:token",
+  usersController.resetPassByEmail,
+  usersController.authorization
+);
 
 module.exports = router;

@@ -1,3 +1,5 @@
+const nodemailer = require("nodemailer");
+
 const { body, validationResult } = require("express-validator");
 const createError = require("http-errors");
 const Event = require("../models/event");
@@ -55,17 +57,34 @@ exports.createView = (req, res, next) => {
     });
 };
 
-/*/ GET /books/create
-exports.createView = (req, res, next) => {
-  res.render("books/create", {
-    title: `Create an Appointment on ${new Date(req.params.date)
-      .toUTCString()
-      .slice(0, 16)}`,
-    date: req.params.date,
-    index: req.params.index,
-    option: req.query.option,
+//Function used on Forget Password Router
+async function mainMail(link, email, date, schedule) {
+  var transporter = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "969396363e67ba",
+      pass: "f3de49be60089c",
+    },
   });
-};*/
+
+  const mailOption = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "My Salon - Appointment created!",
+    html: `<p>Thank you for booking an appointment with us!</p>
+    <p>Here are the details:</p>
+    <p>DATE: ${date}</p>
+    <p>SCHEDULE: ${schedule}</p>
+    <p>If for any reason you decided to cancel your appointment, please give us a call at 204-441-8080
+    or you can just click in the link below and cancel it.</p> 
+    <p>Link : <a href="${link}">${link}</a></p>
+    <p>Please, note: This is an automatic message, please do not replay.</small></p>`,
+  };
+
+  await transporter.sendMail(mailOption);
+  return;
+}
 
 // POST /books/create
 exports.create = (req, res, next) => {
@@ -80,6 +99,12 @@ exports.create = (req, res, next) => {
   Event.create(req.body, (err, event) => {
     if (err) {
       return next(err);
+    }
+    const link = `http://localhost:${process.env.SERVER_PORT}/cancel-appointment/${event.id}`;
+    // Sent the link to the users email -----------------------------------------
+    mainMail(link, event.email, event.date, event.schedule);
+    if (err) {
+      next(err);
     }
     res.redirect(`/books/${event.id}`);
   });
@@ -96,6 +121,19 @@ exports.details = (req, res, next) => {
         title: "Schedule successfully created",
         event: event,
       });
+    }
+  });
+};
+
+// POST events/:id/delete
+exports.cancelAppointment = (req, res, next) => {
+  Event.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      next(err);
+    } else {
+      res.send(
+        "<div stayle='display: table; margin-top:200px'><h1>Appointment canceled!</h1></div>"
+      );
     }
   });
 };
